@@ -1,0 +1,94 @@
+# =========================
+
+# Maven
+
+# =========================
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# =========================
+
+# Java / Compilação
+
+# =========================
+
+*.class
+*.log
+
+# =========================
+
+# IDE - Eclipse
+
+# =========================
+
+.project
+.classpath
+.settings/
+.metadata/
+
+# =========================
+
+# IDE - IntelliJ
+
+# =========================
+
+.idea/
+*.iml
+*.iws
+out/
+
+# =========================
+
+# VS Code
+
+# =========================
+
+.vscode/
+
+# =========================
+
+# Sistema Operacional
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# Servidores (WildFly, etc)
+
+# =========================
+
+standalone/
+deployments/
+*.ear
+*.war
+#*.jar
+
+# =========================
+
+# Logs e temporários
+
+# =========================
+
+logs/
+tmp/
+temp/
+
+# =========================
+
+# Arquivos sensíveis (opcional)
+
+# =========================
+
+*.env
+*.key
+*.pem
+s

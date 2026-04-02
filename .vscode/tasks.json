@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "payara-tranform",
+			"type": "shell",
+			"command": "mvn package fish.payara.transformer:fish.payara.transformer.maven:0.2.11:run",
+			"group": "build"
+		}
+	]
+}
