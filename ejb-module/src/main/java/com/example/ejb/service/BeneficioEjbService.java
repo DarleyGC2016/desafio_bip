@@ -2,7 +2,9 @@ package com.example.ejb.service;
 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
+
 import java.math.BigDecimal;
 
 import com.example.ejb.model.Beneficio;
@@ -12,23 +14,50 @@ public class BeneficioEjbService {
 
     @PersistenceContext
     private EntityManager em;
-
-    public void hello() {
-        System.out.println("EJB integrado com Spring Boot!");
-        System.out.println("Eu sou o seu Ejb e estou funcionando de novo!");
-        System.out.println("Eu sou o seu Ejb e você está usandos os meus dados spring boot!kkkk");
-    }
-
+    
     public void transfer(Long fromId, Long toId, BigDecimal amount) {
-        System.out.println("Eu sou o seu Ejb");  
-        Beneficio from = em.find(Beneficio.class, fromId);
-        Beneficio to   = em.find(Beneficio.class, toId);
+        Beneficio from;
+        Beneficio to;
 
-        // BUG: sem validações, sem locking, pode gerar saldo negativo e lost update
+        if (fromId.equals(toId)) {
+            throw new IllegalArgumentException("Transferência para o mesmo benefício não é permitida");
+        }
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor inválido para transferência");
+        }
+
+        if (fromId > toId) {
+            from = em.find(
+                    Beneficio.class,
+                    fromId,
+                    LockModeType.PESSIMISTIC_WRITE);
+            to = em.find(
+                    Beneficio.class,
+                    toId,
+                    LockModeType.PESSIMISTIC_WRITE);
+        } else {
+            to = em.find(
+                    Beneficio.class,
+                    toId,
+                    LockModeType.PESSIMISTIC_WRITE);
+            from = em.find(
+                    Beneficio.class,
+                    fromId,
+                    LockModeType.PESSIMISTIC_WRITE);
+        }
+
+        if (from == null || to == null) {
+            throw new IllegalArgumentException("Benefício não encontrado");
+        }
+
+        if (from.getValor().compareTo(amount) < 0) {
+            throw new IllegalArgumentException("Saldo insuficiente para transferência");
+        }
+
         from.setValor(from.getValor().subtract(amount));
         to.setValor(to.getValor().add(amount));
 
-        em.merge(from);
-        em.merge(to);
     }
+
 }

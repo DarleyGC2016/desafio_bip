@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.backend.service.BenicifioService;
 
-import java.util.*;
+import io.swagger.v3.oas.annotations.Operation;
 
+import java.math.BigDecimal;
+
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/beneficios")
 public class BeneficioController {
@@ -14,10 +18,12 @@ public class BeneficioController {
     @Autowired
     private BenicifioService benicifioService;
 
-    @GetMapping
-    public List<String> list() {
-        benicifioService.hello(); // Exemplo de uso do serviço
-        return Arrays.asList("Beneficio A", "Beneficio B", "Beneficio C");
+    @Operation(summary = "Realiza a transferência de benefícios entre contas")
+    @PostMapping("/transferir")
+    public String transfer(@RequestParam Long fromId, @RequestParam Long toId, @RequestParam BigDecimal amount) {
+        benicifioService.transfer(fromId, toId, amount);
+        return "Transferência realizada com sucesso";
     }
+        
 }
 

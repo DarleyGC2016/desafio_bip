@@ -1,9 +1,13 @@
 package com.example.backend.service;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ejb.service.BeneficioEjbService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class BenicifioService {
@@ -11,7 +15,8 @@ public class BenicifioService {
     @Autowired
     private BeneficioEjbService serviceEjb; 
 
-    public void hello() {// Exemplo de uso do serviço EJB
-        serviceEjb.hello(); // Exemplo de uso do serviço EJB via configuração   
+    @Transactional
+    public void transfer(Long fromId, Long toId, BigDecimal amount) {
+        serviceEjb.transfer(fromId, toId, amount);
     }
 }
