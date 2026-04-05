@@ -1,7 +1,7 @@
 package com.example.ejb.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,32 +19,69 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "beneficio")
-public class Beneficio {
+public class Beneficio implements Serializable  {   
+
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @NotNull(message = "Nome do benefício é obrigatório")
+    @Size(max = 100, message = "Nome do benefício deve conter no máximo 100 caracteres")
+    @Column(nullable = false, length = 100)
     private String nome; 
 
-    @Column
+    @NotNull(message = "Valor do benefício é obrigatório")
+    @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal valor; 
 
-    @Column
+    @Size(max = 255, message = "Descrição do benefício deve conter no máximo 255 caracteres")
+    @Column(length = 255)
     private String descricao;
 
-    @Column
-    private Boolean ativo;
+    private boolean ativo = true;
 
-    @Column
     @Version
-    private Long version;
-    
-    @Override
-    public String toString() {
-        return "Beneficio [id=" + id + ", nome=" + nome + ", valor=" + valor + ", descricao=" + descricao + ", ativo="
-                + ativo + ", version=" + version + "]";
+    private Long version = 0L;
+
+    public Beneficio() {}
+
+    public Beneficio(String nome, String descricao, BigDecimal valor) {
+        setNome(nome);
+        setDescricao(descricao);
+        setValor(valor);
     }
 
-    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Beneficio other = (Beneficio) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (nome == null) {
+            if (other.nome != null)
+                return false;
+        } else if (!nome.equals(other.nome))
+            return false;
+        return true;
+    }
+        
 }
