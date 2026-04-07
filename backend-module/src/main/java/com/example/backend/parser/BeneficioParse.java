@@ -12,4 +12,14 @@ public class BeneficioParse {
         return new Beneficio(dto.nome(), dto.descricao(), dto.valor());
     }
 
+    public static Beneficio toEntity(BeneficioDTO dto, Beneficio beneficioExistente) {
+        var beneficio = new Beneficio();
+        beneficio.setId(beneficioExistente.getId());
+        beneficio.setNome(dto.nome());
+        beneficio.setDescricao(dto.descricao());
+        beneficio.setValor(dto.valor());
+        beneficio.setVersion(beneficioExistente.getVersion());
+        return beneficio;
+    }
+
 }

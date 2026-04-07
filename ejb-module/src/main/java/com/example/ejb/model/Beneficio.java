@@ -3,6 +3,7 @@ package com.example.ejb.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,6 +54,16 @@ public class Beneficio implements Serializable  {
         setValor(valor);
     }
 
+    
+
+    public Beneficio(Long id,String nome, String descricao, BigDecimal valor,
+            Long version) {
+        setNome(nome);
+        setDescricao(descricao);            
+        setValor(valor);
+        setVersion(version);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -83,5 +94,14 @@ public class Beneficio implements Serializable  {
             return false;
         return true;
     }
-        
+
+    @Override
+    public String toString() {
+        return "Beneficio [id=" + id + ", nome=" + nome + ", valor=" + valor + ", descricao=" + descricao + ", ativo="
+                + ativo + ", version=" + version + "]";
+    }
+
+   
+    
+
 }
