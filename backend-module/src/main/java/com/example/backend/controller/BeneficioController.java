@@ -25,11 +25,12 @@ public class BeneficioController {
 
     private final BeneficioService beneficioService;
 
-    @Operation(summary = "Lista benefícios disponíveis", description = "Endpoint para listar benefícios disponíveis")
+    @Operation(summary = "Lista benefícios disponíveis", description = "listar benefícios disponíveis organizados por páginas")
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário criado"),
-            @ApiResponse(responseCode = "400", description = "Erro de validação")
+            @ApiResponse(responseCode = "200", description = "Benefícios listados com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Não foi possível listar os benefícios!"),
+            @ApiResponse(responseCode = "404", description = "Não foi encontrado nenhum benefício no servidor!")
     })
     @GetMapping("/beneficios")
     public ResponseEntity<List<BeneficioConsultaProjection>> listBeneficiosWithoutVersion(
@@ -38,10 +39,10 @@ public class BeneficioController {
         return ResponseEntity.ok(beneficioService.findByBeneficiosWithoutVersion(page, size));
     }
 
-    @Operation(summary = "Realiza a transferência de benefícios entre contas", description = "Endpoint para transferir benefícios entre contas")
+    @Operation(summary = "Realiza a transferência de benefícios entre contas", description = "Transferir dinheiro entre benefícioss, especificando o valor e os IDs dos benefícios de origem e destino")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário criado"),
-            @ApiResponse(responseCode = "400", description = "Erro de validação")
+            @ApiResponse(responseCode = "200", description = "Transferência realizada com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "c!")
     })
     @PutMapping("/transferir")
     public ResponseEntity<String> transfer(@RequestBody TransferirDTO transferirDTO) {
@@ -49,10 +50,10 @@ public class BeneficioController {
         return ResponseEntity.ok("Transferência de R$" + transferirDTO.amount() + " realizada com sucesso");
     }
 
-    @Operation(summary = "Cria um novo usuário", description = "Endpoint para cadastrar usuário")
+    @Operation(summary = "Cria um novo benefício", description = "Endpoint para cadastrar benefício")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário criado"),
-            @ApiResponse(responseCode = "400", description = "Erro de validação")
+            @ApiResponse(responseCode = "201", description = "Criado um novo Benefício com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Erro na criação de um novo benefício!")
     })
     @PostMapping("/novo")
     public ResponseEntity<String> saveBeneficio(@Valid @RequestBody BeneficioDTO beneficioDTO) {
@@ -60,10 +61,11 @@ public class BeneficioController {
         return ResponseEntity.ok("Beneficio salvo com sucesso!");
     }
 
-    @Operation(summary = "Cria um novo usuário", description = "Endpoint para cadastrar usuário")
+    @Operation(summary = "Atualiza um benefício", description = "Atualizar um benefício existente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário criado"),
-            @ApiResponse(responseCode = "400", description = "Erro de validação")
+            @ApiResponse(responseCode = "201", description = "Benefício atualizado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Erro na atualização do benefício!"),
+            @ApiResponse(responseCode = "404", description = "Benefício não encontrado para atualização!")
     })
     @PutMapping("/beneficio/{id}")
     public ResponseEntity<Void> updateBeneficio(@PathVariable Long id,
@@ -72,10 +74,11 @@ public class BeneficioController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Cria um novo usuário", description = "Endpoint para cadastrar usuário")
+    @Operation(summary = "Exclui um benefício", description = "Excluir um benefício")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário criado"),
-            @ApiResponse(responseCode = "400", description = "Erro de validação")
+            @ApiResponse(responseCode = "201", description = "Benefício excluído com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Erro na exclusão do benefício!"),
+            @ApiResponse(responseCode = "404", description = "Benefício não encontrado para exclusão!")
     })
     @DeleteMapping("/beneficio/delete/{id}")
     public ResponseEntity<Void> deleteBeneficio(@PathVariable Long id) {
@@ -83,10 +86,11 @@ public class BeneficioController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Cria um novo usuário", description = "Endpoint para cadastrar usuário")
+    @Operation(summary = "Detalha um benefício", description = "Detalhar um unico benefício")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Usuário criado"),
-            @ApiResponse(responseCode = "400", description = "Erro de validação")
+            @ApiResponse(responseCode = "200", description = "Benefício detalhado com sucesso!"),
+            @ApiResponse(responseCode = "400", description = "Erro na consulta do benefício!"),
+            @ApiResponse(responseCode = "404", description = "Benefício não encontrado!")
     })
     @GetMapping("/beneficio/{id}")
     public ResponseEntity<Beneficio> detailBeneficio(@PathVariable Long id) {
