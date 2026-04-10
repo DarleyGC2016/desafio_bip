@@ -68,10 +68,10 @@ public class BeneficioController {
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado para atualização!")
     })
     @PutMapping("/beneficio/{id}")
-    public ResponseEntity<Void> updateBeneficio(@PathVariable Long id,
+    public ResponseEntity<String> updateBeneficio(@PathVariable Long id,
             @Valid @RequestBody BeneficioDTO beneficioDTO) {
         beneficioService.update(id, beneficioDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Benefício atualizado com sucesso!");
     }
 
     @Operation(summary = "Exclui um benefício", description = "Excluir um benefício")

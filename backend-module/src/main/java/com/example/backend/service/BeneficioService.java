@@ -34,45 +34,33 @@ public class BeneficioService {
 
     @Transactional
     public void save(BeneficioDTO dto) {
-        findByNome(dto.nome());
-        Beneficio beneficio = BeneficioParse.toEntity(dto);
+        verificaExisteNomeDuplicado(dto.nome());
+        var beneficio = BeneficioParse.toEntity(dto);
         beneficioRepoistory.save(beneficio);
     }
 
     @Transactional
     public Beneficio update(Long id, BeneficioDTO dto) {
-        Beneficio beneficio = beneficioRepoistory
+        var beneficio = beneficioRepoistory
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Benefício não encontrado!"));
 
-        findByNome(dto.nome());
+        verificaExisteNomeDuplicado(dto.nome());
 
         Beneficio beneficioAtualizado = BeneficioParse.toEntity(dto, beneficio);
 
         return beneficioRepoistory.saveAndFlush(beneficioAtualizado);
     }
 
-    private void findByNome(String nome) {
-        List<Beneficio> existingBeneficios = beneficioRepoistory.findByNome(nome);
-        List<String> nomes = existingBeneficios.stream()
-                .filter(beneficio -> beneficio
-                        .getNome()
-                        .toLowerCase()
-                        .equals(
-                                nome.toLowerCase()))
-                .map(beneficio -> {
-                    return "O Benefício '" + beneficio.getNome() + "' já existe! ";
-                })
-                .toList();
-
-        if (!nomes.isEmpty()) {
-            throw new IllegalArgumentException(nomes.get(0));
+    public void verificaExisteNomeDuplicado(String nome) {
+        if (beneficioRepoistory.existsByNomeIgnoreCase(nome)) {
+            throw new IllegalArgumentException("O Benefício '" + nome + "' já existe! ");
         }
     }
 
     @Transactional
     public void delete(Long id) {
-        Beneficio beneficio = beneficioRepoistory.findById(id)
+        var beneficio = beneficioRepoistory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Benefício não encontrado!"));
         beneficioRepoistory.delete(beneficio);
     }
