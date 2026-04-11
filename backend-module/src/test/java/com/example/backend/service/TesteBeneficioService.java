@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -25,11 +26,13 @@ import org.springframework.data.domain.Sort;
 
 import com.example.backend.DTO.BeneficioDTO;
 import com.example.backend.DTO.TransferirDTO;
+import com.example.backend.parser.BeneficioParse;
 import com.example.backend.repository.BeneficioRepository;
 import com.example.backend.repository.projection.BeneficioConsultaProjection;
 import com.example.ejb.model.Beneficio;
 import com.example.ejb.service.BeneficioEjbService;
 
+@DisplayName("Teste unitário do BeneficioService")
 @ExtendWith(MockitoExtension.class)
 public class TesteBeneficioService {
 
@@ -64,32 +67,34 @@ public class TesteBeneficioService {
                 "Benefício A",
                 BigDecimal.valueOf(100));
 
-        when(beneficioRepository.existsByNomeIgnoreCase(anyString())).thenReturn(true);
+        Beneficio beneficio = BeneficioParse.toEntity(beneficioDto);        
+        when(beneficioRepository.existsByNomeIgnoreCase(beneficioDto.nome())).thenReturn(true);
         var exception = assertThrows(IllegalArgumentException.class, () -> beneficioService.save(beneficioDto));
 
         assertEquals("O Benefício 'Benefício A' já existe! ", exception.getMessage());
-        verify(beneficioRepository, never()).save(any(Beneficio.class));
+        verify(beneficioRepository, never()).save(beneficio);
     }
 
     @DisplayName("Deve atualizar um benefício com sucesso")
     @Test
     void updateWithSuccess() {
         Long id = 1L;
-        var beneficioDto = new BeneficioDTO(
-                "Benefício A",
-                "Benefício A",
-                BigDecimal.valueOf(100));
-        Beneficio beneficio = new Beneficio();
-        beneficio.setId(1L);
-        beneficio.setNome(beneficioDto.nome());
-        beneficio.setDescricao(beneficioDto.descricao());
-        beneficio.setValor(beneficioDto.valor());
+        Long version = 0L;
+        BeneficioDTO dto = new BeneficioDTO("Cartão Alimentação", "Cartão para uso em estabelecimentos credenciados",  BigDecimal.valueOf(100.90));
+        Beneficio beneficioExistente = BeneficioParse.toEntity(dto, id, version);
 
-        when(beneficioRepository.findById(id)).thenReturn(Optional.of(beneficio));
-        when(beneficioRepository.existsByNomeIgnoreCase(anyString())).thenReturn(false);
+        when(beneficioRepository.findById(id)).thenReturn(Optional.of(beneficioExistente));
+        when(beneficioRepository.existsByNomeIgnoreCase(beneficioExistente.getNome())).thenReturn(false);
+        when(beneficioRepository.saveAndFlush(any(Beneficio.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        beneficioService.update(id, beneficioDto);
-        verify(beneficioRepository, times(1)).saveAndFlush(beneficio);
+        // WHEN
+        Beneficio resultado = beneficioService.update(id, dto);
+
+        // THEN
+        assertNotNull(resultado);
+        assertEquals(id, resultado.getId());
+        assertEquals(dto.nome(), resultado.getNome());
+        verify(beneficioRepository).saveAndFlush(any(Beneficio.class));
     }
 
     @DisplayName("Deve atualizar se o id for do benefício que será atualizado")
@@ -99,12 +104,7 @@ public class TesteBeneficioService {
         var beneficioDto = new BeneficioDTO(
                 "Benefício A",
                 "Benefício A",
-                BigDecimal.valueOf(100));
-        Beneficio beneficio = new Beneficio();
-        beneficio.setId(1L);
-        beneficio.setNome(beneficioDto.nome());
-        beneficio.setDescricao(beneficioDto.descricao());
-        beneficio.setValor(beneficioDto.valor());
+                BigDecimal.valueOf(100));       
 
         when(beneficioRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -192,7 +192,6 @@ public class TesteBeneficioService {
     @DisplayName("Deve fazer a transferência de benefícios com sucesso")
     @Test
     void transferWithSuccess() {
-        // Configurar os dados de teste
         Long fromId = 1L;
         Long toId = 2L;
         BigDecimal amount = BigDecimal.valueOf(100);

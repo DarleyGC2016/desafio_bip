@@ -16,7 +16,6 @@ public class BeneficioEjbService {
     private EntityManager em;
 
     public void transfer(Long fromId, Long toId, BigDecimal amount) {
-        System.out.println("Transferindo " + amount + " de benefício " + fromId + " para benefício " + toId);
         Beneficio from;
         Beneficio to;
 

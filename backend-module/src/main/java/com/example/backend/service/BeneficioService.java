@@ -41,13 +41,13 @@ public class BeneficioService {
 
     @Transactional
     public Beneficio update(Long id, BeneficioDTO dto) {
-        var beneficio = beneficioRepoistory
+        Beneficio beneficio = beneficioRepoistory
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Benefício não encontrado!"));
 
         verificaExisteNomeDuplicado(dto.nome());
 
-        Beneficio beneficioAtualizado = BeneficioParse.toEntity(dto, beneficio);
+        Beneficio beneficioAtualizado = BeneficioParse.toEntity(dto, beneficio.getId(), beneficio.getVersion());
 
         return beneficioRepoistory.saveAndFlush(beneficioAtualizado);
     }
