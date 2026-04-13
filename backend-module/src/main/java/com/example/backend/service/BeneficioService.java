@@ -36,11 +36,16 @@ public class BeneficioService {
     public void save(BeneficioDTO dto) {
         verificaExisteNomeDuplicado(dto.nome());
         var beneficio = BeneficioParse.toEntity(dto);
-        beneficioRepoistory.save(beneficio);
+        if (beneficio != null) {
+            beneficioRepoistory.save(beneficio);
+        }
     }
 
     @Transactional
     public Beneficio update(Long id, BeneficioDTO dto) {
+        if (id == null) {
+            throw new IllegalArgumentException("O id do benefício é obrigatório para atualização!");
+        }
         Beneficio beneficio = beneficioRepoistory
                 .findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Benefício não encontrado!"));
@@ -48,8 +53,10 @@ public class BeneficioService {
         verificaExisteNomeDuplicado(dto.nome());
 
         Beneficio beneficioAtualizado = BeneficioParse.toEntity(dto, beneficio.getId(), beneficio.getVersion());
-
-        return beneficioRepoistory.saveAndFlush(beneficioAtualizado);
+        if (beneficioAtualizado == null) {
+            throw new IllegalArgumentException("Erro ao atualizar o benefício! Verifique os dados fornecidos.");
+        }
+        return beneficioRepoistory.saveAndFlush(beneficioAtualizado) ;
     }
 
     public void verificaExisteNomeDuplicado(String nome) {
@@ -60,8 +67,15 @@ public class BeneficioService {
 
     @Transactional
     public void delete(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("O id do benefício é obrigatório para exclusão!");
+        }
+
         var beneficio = beneficioRepoistory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Benefício não encontrado!"));
+        if (beneficio == null) {
+            throw new IllegalArgumentException("Benefício não encontrado para exclusão!");
+        }
         beneficioRepoistory.delete(beneficio);
     }
 
@@ -73,6 +87,9 @@ public class BeneficioService {
 
     @Transactional
     public Beneficio detailBeneficio(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("O id do benefício é obrigatório para detalhamento!");
+        }
         return beneficioRepoistory.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Benefício não encontrado!"));
     }

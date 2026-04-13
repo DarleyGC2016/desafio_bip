@@ -61,6 +61,10 @@ public class TestBeneficioController {
                                 BigDecimal.valueOf(100));
                 String json = objectMapper.writeValueAsString(beneficioDTO);
 
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
+                }
+
                 mockMvc.perform(post("/api/v1/novo")
                                 .contentType("application/json")
                                 .content(json))
@@ -75,6 +79,9 @@ public class TestBeneficioController {
         void saveBeneficioWithBadRequest() throws Exception {
                 var beneficioDTO = "\"{}\"";
                 String json = objectMapper.writeValueAsString(beneficioDTO);
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
+                }
 
                 mockMvc.perform(post("/api/v1/novo")
                                 .contentType("application/json")
@@ -93,7 +100,9 @@ public class TestBeneficioController {
                                 "Benefício A",
                                 BigDecimal.valueOf(100));
                 String json = objectMapper.writeValueAsString(beneficioDTO);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
+                }
                 mockMvc.perform(put("/api/v1/beneficio/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
@@ -109,7 +118,9 @@ public class TestBeneficioController {
                 Long id = 1L;
                 var beneficioDTO = "{\"nome\": \"\", \"valor\": -50}";
                 String json = objectMapper.writeValueAsString(beneficioDTO);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
+                }
                 mockMvc.perform(put("/api/v1/beneficio/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
@@ -130,7 +141,9 @@ public class TestBeneficioController {
 
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).update(eq(id), any(BeneficioDTO.class));
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
+                }
                 mockMvc.perform(put("/api/v1/beneficio/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
@@ -143,6 +156,9 @@ public class TestBeneficioController {
         void deleteBeneficioWithSuccess() throws Exception {
                 Long id = 1L;
                 String json = objectMapper.writeValueAsString(id);
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o id para JSON!");
+                }
                 mockMvc.perform(delete("/api/v1/beneficio/delete/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
@@ -157,7 +173,9 @@ public class TestBeneficioController {
         void deleteBeneficioWithBadRequest() throws Exception {
                 Long id = 19L;
                 String json = objectMapper.writeValueAsString(id);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o id para JSON!");
+                }
                 doThrow(new IllegalArgumentException("Este benefício não existe para ser excluído!"))
                                 .when(beneficioService).delete(id);
                 mockMvc.perform(delete("/api/v1/beneficio/delete/{id}", id)
@@ -173,7 +191,9 @@ public class TestBeneficioController {
         void deleteBeneficioWithNotFound() throws Exception {
                 Long id = 99L;
                 String json = objectMapper.writeValueAsString(id);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o id para JSON!");
+                }
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).delete(id);
                 mockMvc.perform(delete("/api/v1/beneficio/delete/{id}", id)
@@ -189,6 +209,9 @@ public class TestBeneficioController {
         void detailBeneficioWithSuccess() throws Exception {
                 Long id = 1L;
                 String json = objectMapper.writeValueAsString(id);
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o id para JSON!");
+                }
                 mockMvc.perform(get("/api/v1/beneficio/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
@@ -202,7 +225,9 @@ public class TestBeneficioController {
         void detailBeneficioWithBadRequest() throws Exception {
                 Long id = 19L;
                 String json = objectMapper.writeValueAsString(id);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o id para JSON!");
+                }
                 doThrow(new IllegalArgumentException("Este benefício não existe para ser detalhado!"))
                                 .when(beneficioService).detailBeneficio(id);
                 mockMvc.perform(get("/api/v1/beneficio/{id}", id)
@@ -218,7 +243,9 @@ public class TestBeneficioController {
         void detailBeneficioWithNotFound() throws Exception {
                 Long id = 99L;
                 String json = objectMapper.writeValueAsString(id);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o id para JSON!");
+                }
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).detailBeneficio(id);
                 mockMvc.perform(get("/api/v1/beneficio/{id}", id)
@@ -290,6 +317,9 @@ public class TestBeneficioController {
                 var transferirDTO = new TransferirDTO(fromId, toId, amount);
                 String json = objectMapper.writeValueAsString(transferirDTO);
 
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o TransferirDTO para JSON!");
+                }
                 mockMvc.perform(put("/api/v1/transferir")
                                 .contentType("application/json")
                                 .content(json))
@@ -307,7 +337,9 @@ public class TestBeneficioController {
                 BigDecimal amount = BigDecimal.valueOf(1050);
                 var transferirDTO = new TransferirDTO(fromId, toId, amount);
                 String json = objectMapper.writeValueAsString(transferirDTO);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o TransferirDTO para JSON!");
+                }
                 doThrow(new IllegalArgumentException("Saldo insuficiente para transferência"))
                                 .when(beneficioService).transfer(transferirDTO);
 
@@ -328,7 +360,9 @@ public class TestBeneficioController {
                 BigDecimal amount = BigDecimal.valueOf(50);
                 var transferirDTO = new TransferirDTO(fromId, toId, amount);
                 String json = objectMapper.writeValueAsString(transferirDTO);
-
+                if (json == null) {
+                        throw new IllegalArgumentException("Erro ao converter o TransferirDTO para JSON!");
+                }
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).transfer(transferirDTO);
 

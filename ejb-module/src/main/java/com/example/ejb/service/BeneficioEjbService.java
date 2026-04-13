@@ -50,6 +50,10 @@ public class BeneficioEjbService {
                     LockModeType.PESSIMISTIC_WRITE);
         }
 
+        if (from == null || to == null) {
+            throw new IllegalArgumentException("Benefício de origem ou destino não encontrado para transferência!");
+        }
+
         if (from.getValor().compareTo(amount) < 0) {
             throw new IllegalArgumentException("Saldo insuficiente para transferência");
         }

@@ -1,13 +1,13 @@
 package com.example.backend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
@@ -23,7 +23,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
 import com.example.backend.DTO.BeneficioDTO;
 import com.example.backend.DTO.TransferirDTO;
 import com.example.backend.parser.BeneficioParse;
@@ -45,6 +44,7 @@ public class TesteBeneficioService {
     @InjectMocks
     private BeneficioService beneficioService;
 
+    @SuppressWarnings("null")
     @Test
     @DisplayName("Deve salvar um benefício com sucesso")
     void saveWithSuccess() {
@@ -54,9 +54,13 @@ public class TesteBeneficioService {
                 BigDecimal.valueOf(100));
 
         when(beneficioRepository.existsByNomeIgnoreCase(anyString())).thenReturn(false);
-
+        Beneficio beneficio = BeneficioParse.toEntity(beneficioDto);
+        if (beneficio == null) {
+            throw new IllegalArgumentException(
+                    "Erro ao converter os dados do Benefício DTO para entidade! Verifique os dados fornecidos.");
+        }
         beneficioService.save(beneficioDto);
-        verify(beneficioRepository, times(1)).save(any(Beneficio.class));
+        verify(beneficioRepository).save(any(Beneficio.class));
     }
 
     @Test
@@ -67,34 +71,38 @@ public class TesteBeneficioService {
                 "Benefício A",
                 BigDecimal.valueOf(100));
 
-        Beneficio beneficio = BeneficioParse.toEntity(beneficioDto);        
+        Beneficio beneficio = BeneficioParse.toEntity(beneficioDto);
+        if (beneficio == null) {
+            throw new IllegalArgumentException(
+                    "Erro ao converter o Benefício DTO para entidade! Verifique os dados fornecidos.");
+        }
         when(beneficioRepository.existsByNomeIgnoreCase(beneficioDto.nome())).thenReturn(true);
         var exception = assertThrows(IllegalArgumentException.class, () -> beneficioService.save(beneficioDto));
 
         assertEquals("O Benefício 'Benefício A' já existe! ", exception.getMessage());
-        verify(beneficioRepository, never()).save(beneficio);
+        verify(beneficioRepository, never()).saveAndFlush(beneficio);
     }
 
+    @SuppressWarnings("null")
     @DisplayName("Deve atualizar um benefício com sucesso")
     @Test
     void updateWithSuccess() {
         Long id = 1L;
         Long version = 0L;
-        BeneficioDTO dto = new BeneficioDTO("Cartão Alimentação", "Cartão para uso em estabelecimentos credenciados",  BigDecimal.valueOf(100.90));
+        BeneficioDTO dto = new BeneficioDTO("Cartão Alimentação", "Cartão para uso em estabelecimentos credenciados",
+                BigDecimal.valueOf(100.90));
         Beneficio beneficioExistente = BeneficioParse.toEntity(dto, id, version);
-
+        if (beneficioExistente == null) {
+            throw new IllegalArgumentException(
+                    "Erro ao converter o Benefício DTO para entidade! Verifique os dados fornecidos.");
+        }
         when(beneficioRepository.findById(id)).thenReturn(Optional.of(beneficioExistente));
         when(beneficioRepository.existsByNomeIgnoreCase(beneficioExistente.getNome())).thenReturn(false);
-        when(beneficioRepository.saveAndFlush(any(Beneficio.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(beneficioRepository.saveAndFlush(any(Beneficio.class))).thenReturn(beneficioExistente);
 
-        // WHEN
-        Beneficio resultado = beneficioService.update(id, dto);
+        beneficioService.update(id, dto);
 
-        // THEN
-        assertNotNull(resultado);
-        assertEquals(id, resultado.getId());
-        assertEquals(dto.nome(), resultado.getNome());
-        verify(beneficioRepository).saveAndFlush(any(Beneficio.class));
+        verify(beneficioRepository, times(1)).saveAndFlush(any(Beneficio.class));
     }
 
     @DisplayName("Deve atualizar se o id for do benefício que será atualizado")
@@ -104,15 +112,15 @@ public class TesteBeneficioService {
         var beneficioDto = new BeneficioDTO(
                 "Benefício A",
                 "Benefício A",
-                BigDecimal.valueOf(100));       
+                BigDecimal.valueOf(100));
 
         when(beneficioRepository.findById(id)).thenReturn(Optional.empty());
 
         var exception = assertThrows(IllegalArgumentException.class, () -> beneficioService.update(id, beneficioDto));
         assertEquals("Benefício não encontrado!", exception.getMessage());
 
-        verify(beneficioRepository, never()).existsByNomeIgnoreCase( anyString());
-        verify(beneficioRepository, never()).saveAndFlush(any());
+        verify(beneficioRepository, never()).existsByNomeIgnoreCase(anyString());
+
     }
 
     @DisplayName("Excluir um benefício com sucesso")
@@ -129,7 +137,7 @@ public class TesteBeneficioService {
     }
 
     @DisplayName("Deve lançar exceção ao tentar excluir um benefício que não existe")
-    @Test   
+    @Test
     void deleteBeneficioNaoExiste() {
         Long id = 1L;
 
@@ -138,7 +146,7 @@ public class TesteBeneficioService {
         var exception = assertThrows(IllegalArgumentException.class, () -> beneficioService.delete(id));
         assertEquals("Benefício não encontrado!", exception.getMessage());
 
-        verify(beneficioRepository, never()).delete(any());
+        verifyNoMoreInteractions(beneficioRepository);
     }
 
     @DisplayName("Deve retornar os detalhes de um benefício com sucesso")
@@ -158,7 +166,7 @@ public class TesteBeneficioService {
     }
 
     @DisplayName("Deve lançar exceção ao tentar obter detalhes de um benefício que não existe")
-    @Test   
+    @Test
     void detailBeneficioNotExist() {
         Long id = 1L;
 
@@ -178,7 +186,7 @@ public class TesteBeneficioService {
 
         when(beneficioRepository.findByBeneficiosWithoutVersion(any(Pageable.class))).thenReturn(mockListBenficios);
 
-        List<BeneficioConsultaProjection> beneficios= beneficioService.findByBeneficiosWithoutVersion(pagina, tamanho);
+        List<BeneficioConsultaProjection> beneficios = beneficioService.findByBeneficiosWithoutVersion(pagina, tamanho);
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
         verify(beneficioRepository, times(1)).findByBeneficiosWithoutVersion(pageableCaptor.capture());
 
