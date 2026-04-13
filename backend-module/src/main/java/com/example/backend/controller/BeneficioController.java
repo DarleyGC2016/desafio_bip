@@ -28,7 +28,7 @@ public class BeneficioController {
     @Operation(summary = "Lista benefícios disponíveis", description = "listar benefícios disponíveis organizados por páginas")
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Benefícios listados com sucesso!"),
+            @ApiResponse(responseCode = "201", description = "Benefícios listados com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Não foi possível listar os benefícios!"),
             @ApiResponse(responseCode = "404", description = "Não foi encontrado nenhum benefício no servidor!")
     })
@@ -42,7 +42,8 @@ public class BeneficioController {
     @Operation(summary = "Realiza a transferência de benefícios entre contas", description = "Transferir dinheiro entre benefícioss, especificando o valor e os IDs dos benefícios de origem e destino")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Transferência realizada com sucesso!"),
-            @ApiResponse(responseCode = "400", description = "c!")
+            @ApiResponse(responseCode = "400", description = "Erro na transferência de benefícios!"),
+            @ApiResponse(responseCode = "404", description = "Benefício de origem ou destino não encontrado para transferência!")
     })
     @PutMapping("/transferir")
     public ResponseEntity<String> transfer(@RequestBody TransferirDTO transferirDTO) {
@@ -81,9 +82,9 @@ public class BeneficioController {
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado para exclusão!")
     })
     @DeleteMapping("/beneficio/delete/{id}")
-    public ResponseEntity<Void> deleteBeneficio(@PathVariable Long id) {
+    public ResponseEntity<String> deleteBeneficio(@PathVariable Long id) {
         beneficioService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Benefício excluído com sucesso!");
     }
 
     @Operation(summary = "Detalha um benefício", description = "Detalhar um unico benefício")

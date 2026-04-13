@@ -62,11 +62,5 @@ public class Beneficio implements Serializable  {
         setVersion(version);
     }
 
-    @Override
-    public String toString() {
-        return "Beneficio [getDescricao()=" + getDescricao() + ", getId()=" + getId() + ", getNome()=" + getNome()
-                + ", getValor()=" + getValor() + ", getVersion()=" + getVersion() + ", isAtivo()=" + isAtivo() + "]";
-    }
-
     
 }

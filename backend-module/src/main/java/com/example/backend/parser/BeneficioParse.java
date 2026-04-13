@@ -12,14 +12,6 @@ public class BeneficioParse {
         return new Beneficio(dto.nome(), dto.descricao(), dto.valor());
     }
 
-    public static Beneficio toEntity(BeneficioDTO dto, Long id) {
-        var beneficio = new Beneficio();
-        beneficio.setId(id);
-        beneficio.setNome(dto.nome());
-        beneficio.setDescricao(dto.descricao());
-        beneficio.setValor(dto.valor());
-        return beneficio;
-    }
     public static Beneficio toEntity(BeneficioDTO dto, Long id, Long version) {
         var beneficio = new Beneficio();
         beneficio.setId(id);
