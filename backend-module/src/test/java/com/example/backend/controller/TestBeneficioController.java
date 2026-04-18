@@ -65,7 +65,7 @@ public class TestBeneficioController {
                         throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
                 }
 
-                mockMvc.perform(post("/api/v1/novo")
+                mockMvc.perform(post("/api/v1/beneficio/novo")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk())
@@ -83,7 +83,7 @@ public class TestBeneficioController {
                         throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
                 }
 
-                mockMvc.perform(post("/api/v1/novo")
+                mockMvc.perform(post("/api/v1/beneficio/novo")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isBadRequest());

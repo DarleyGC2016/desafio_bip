@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1")
 public class BeneficioController {
@@ -56,7 +56,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "201", description = "Criado um novo Benefício com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na criação de um novo benefício!")
     })
-    @PostMapping("/novo")
+    @PostMapping("/beneficio/novo")
     public ResponseEntity<String> saveBeneficio(@Valid @RequestBody BeneficioDTO beneficioDTO) {
         beneficioService.save(beneficioDTO);
         return ResponseEntity.ok("Beneficio salvo com sucesso!");
