@@ -7,8 +7,12 @@
     "rootDir": "./src",
     "types": []
   },
+  "files": [
+    "src/main.ts"
+  ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts", // <--- Adicione este para incluir seus arquivos de código
+    "src/**/*.d.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts"
