@@ -3,8 +3,7 @@ package com.example.backend.service;
 import com.example.backend.repository.BeneficioRepository;
 import com.example.backend.repository.projection.BeneficioConsultaProjection;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -80,7 +79,7 @@ public class BeneficioService {
     }
 
     @Transactional
-    public List<BeneficioConsultaProjection> findByBeneficiosWithoutVersion(int pagina, int tamanho) {
+    public Page<BeneficioConsultaProjection> findByBeneficiosWithoutVersion(int pagina, int tamanho) {
         Pageable pageable = PageRequest.of(pagina, tamanho, Sort.by("id").ascending());
         return beneficioRepoistory.findByBeneficiosWithoutVersion(pageable);
     }

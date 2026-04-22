@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
@@ -33,7 +32,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "404", description = "Não foi encontrado nenhum benefício no servidor!")
     })
     @GetMapping("/beneficios")
-    public ResponseEntity<List<BeneficioConsultaProjection>> listBeneficiosWithoutVersion(
+    public ResponseEntity<Page<BeneficioConsultaProjection>> listBeneficiosWithoutVersion(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(beneficioService.findByBeneficiosWithoutVersion(page, size));

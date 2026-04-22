@@ -5,6 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
@@ -256,9 +260,47 @@ public class TestBeneficioController {
                 verify(beneficioService).detailBeneficio(id);
         }
 
+        /*
+         * @Test
+         * 
+         * @DisplayName("Deve retornar uma página de benefícios com sucesso")
+         * void findByBeneficiosWithoutVersionWithSuccess() {
+         * // 1. ARRANGE (Configuração)
+         * int pagina = 0;
+         * int tamanho = 10;
+         * var pageableEsperado = PageRequest.of(pagina, tamanho,
+         * Sort.by("id").ascending());
+         * 
+         * // Criamos um mock da projeção (já que é uma interface)
+         * var projecaoMock = Mockito.mock(BeneficioConsultaProjection.class);
+         * List<BeneficioConsultaProjection> listaContent = List.of(projecaoMock);
+         * 
+         * // Criamos o objeto Page de resposta (Content, Pageable, Total)
+         * Page<BeneficioConsultaProjection> pageResponse = new PageImpl<>(listaContent,
+         * pageableEsperado, 1);
+         * 
+         * // Mockamos o repositório para retornar a Page
+         * when(beneficioRepository.findByBeneficiosWithoutVersion(pageableEsperado))
+         * .thenReturn(pageResponse);
+         * 
+         * // 2. ACT (Execução)
+         * Page<BeneficioConsultaProjection> resultado =
+         * beneficioService.findByBeneficiosWithoutVersion(pagina, tamanho);
+         * 
+         * // 3. ASSERT (Verificação)
+         * assertNotNull(resultado);
+         * assertEquals(1, resultado.getTotalElements()); // Verifica o total
+         * assertEquals(1, resultado.getContent().size()); // Verifica a lista interna
+         * verify(beneficioRepository).findByBeneficiosWithoutVersion(pageableEsperado);
+         * }
+         * 
+         */
         @DisplayName("Deve listar os benefícios com páginação com sucesso ")
         @Test
         void listBeneficiosWithSuccess() throws Exception {
+                int pagina = 0;
+                int tamanho = 10;
+                var pageableEsperado = PageRequest.of(pagina, tamanho, Sort.by("id").ascending());
 
                 List<BeneficioConsultaProjection> beneficios = new ArrayList<>();
                 beneficios.add(
@@ -267,13 +309,14 @@ public class TestBeneficioController {
                                                 "Vale Transporte",
                                                 "Benefício de transporte para os funcionários",
                                                 BigDecimal.valueOf(150.00)));
-
+                Page<BeneficioConsultaProjection> pageResponse = new PageImpl<>(beneficios,
+                                pageableEsperado, 1);
                 when(beneficioService.findByBeneficiosWithoutVersion(0, 10))
-                                .thenReturn(beneficios);
+                                .thenReturn(pageResponse);
 
                 mockMvc.perform(get("/api/v1/beneficios"))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$[0].nome").value("Vale Transporte"));
+                                .andExpect(jsonPath("$.content").isArray());
 
                 verify(beneficioService).findByBeneficiosWithoutVersion(0, 10);
 

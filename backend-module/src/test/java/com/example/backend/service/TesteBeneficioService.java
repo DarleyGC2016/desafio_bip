@@ -21,6 +21,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import com.example.backend.DTO.BeneficioDTO;
@@ -176,17 +178,18 @@ public class TesteBeneficioService {
         assertEquals("Benefício não encontrado!", exception.getMessage());
     }
 
+    @SuppressWarnings("null")
     @DisplayName("Listar benefícios sem versão com sucesso")
     @Test
     void listBeneficiosWithoutVersion() {
         int pagina = 0;
         int tamanho = 10;
 
-        List<BeneficioConsultaProjection> mockListBenficios = List.of();
+        Page<BeneficioConsultaProjection> mockListBenficios = new PageImpl<>(List.of());
 
         when(beneficioRepository.findByBeneficiosWithoutVersion(any(Pageable.class))).thenReturn(mockListBenficios);
 
-        List<BeneficioConsultaProjection> beneficios = beneficioService.findByBeneficiosWithoutVersion(pagina, tamanho);
+        Page<BeneficioConsultaProjection> beneficios = beneficioService.findByBeneficiosWithoutVersion(pagina, tamanho);
         ArgumentCaptor<Pageable> pageableCaptor = ArgumentCaptor.forClass(Pageable.class);
         verify(beneficioRepository, times(1)).findByBeneficiosWithoutVersion(pageableCaptor.capture());
 

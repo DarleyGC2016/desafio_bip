@@ -2,6 +2,7 @@ package com.example.backend.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,5 @@ public interface BeneficioRepository extends JpaRepository<Beneficio, Long> {
    Beneficio findById(long id);
 
    @Query(value = "SELECT b.id as id,  b.nome as nome, b.descricao as descricao, b.valor  as valor FROM Beneficio b")
-   List<BeneficioConsultaProjection> findByBeneficiosWithoutVersion(Pageable pageable);
+   Page<BeneficioConsultaProjection> findByBeneficiosWithoutVersion(Pageable pageable);
 }
