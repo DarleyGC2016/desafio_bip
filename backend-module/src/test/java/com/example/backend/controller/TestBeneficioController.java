@@ -69,7 +69,7 @@ public class TestBeneficioController {
                         throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
                 }
 
-                mockMvc.perform(post("/api/v1/beneficio/novo")
+                mockMvc.perform(post("/api/v1/beneficios")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk())
@@ -87,7 +87,7 @@ public class TestBeneficioController {
                         throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
                 }
 
-                mockMvc.perform(post("/api/v1/beneficio/novo")
+                mockMvc.perform(post("/api/v1/beneficios")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isBadRequest());
@@ -107,7 +107,7 @@ public class TestBeneficioController {
                 if (json == null) {
                         throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
                 }
-                mockMvc.perform(put("/api/v1/beneficio/{id}", id)
+                mockMvc.perform(put("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk())
@@ -125,7 +125,7 @@ public class TestBeneficioController {
                 if (json == null) {
                         throw new IllegalArgumentException("Erro ao converter o BeneficioDTO para JSON!");
                 }
-                mockMvc.perform(put("/api/v1/beneficio/{id}", id)
+                mockMvc.perform(put("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isBadRequest());
@@ -163,7 +163,7 @@ public class TestBeneficioController {
                 if (json == null) {
                         throw new IllegalArgumentException("Erro ao converter o id para JSON!");
                 }
-                mockMvc.perform(delete("/api/v1/beneficio/delete/{id}", id)
+                mockMvc.perform(delete("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk())
@@ -182,7 +182,7 @@ public class TestBeneficioController {
                 }
                 doThrow(new IllegalArgumentException("Este benefício não existe para ser excluído!"))
                                 .when(beneficioService).delete(id);
-                mockMvc.perform(delete("/api/v1/beneficio/delete/{id}", id)
+                mockMvc.perform(delete("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isBadRequest());
@@ -200,7 +200,7 @@ public class TestBeneficioController {
                 }
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).delete(id);
-                mockMvc.perform(delete("/api/v1/beneficio/delete/{id}", id)
+                mockMvc.perform(delete("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isNotFound());
@@ -216,7 +216,7 @@ public class TestBeneficioController {
                 if (json == null) {
                         throw new IllegalArgumentException("Erro ao converter o id para JSON!");
                 }
-                mockMvc.perform(get("/api/v1/beneficio/{id}", id)
+                mockMvc.perform(get("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk());
@@ -234,7 +234,7 @@ public class TestBeneficioController {
                 }
                 doThrow(new IllegalArgumentException("Este benefício não existe para ser detalhado!"))
                                 .when(beneficioService).detailBeneficio(id);
-                mockMvc.perform(get("/api/v1/beneficio/{id}", id)
+                mockMvc.perform(get("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isBadRequest());
@@ -252,7 +252,7 @@ public class TestBeneficioController {
                 }
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).detailBeneficio(id);
-                mockMvc.perform(get("/api/v1/beneficio/{id}", id)
+                mockMvc.perform(get("/api/v1/beneficios/{id}", id)
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isNotFound());
@@ -260,41 +260,6 @@ public class TestBeneficioController {
                 verify(beneficioService).detailBeneficio(id);
         }
 
-        /*
-         * @Test
-         * 
-         * @DisplayName("Deve retornar uma página de benefícios com sucesso")
-         * void findByBeneficiosWithoutVersionWithSuccess() {
-         * // 1. ARRANGE (Configuração)
-         * int pagina = 0;
-         * int tamanho = 10;
-         * var pageableEsperado = PageRequest.of(pagina, tamanho,
-         * Sort.by("id").ascending());
-         * 
-         * // Criamos um mock da projeção (já que é uma interface)
-         * var projecaoMock = Mockito.mock(BeneficioConsultaProjection.class);
-         * List<BeneficioConsultaProjection> listaContent = List.of(projecaoMock);
-         * 
-         * // Criamos o objeto Page de resposta (Content, Pageable, Total)
-         * Page<BeneficioConsultaProjection> pageResponse = new PageImpl<>(listaContent,
-         * pageableEsperado, 1);
-         * 
-         * // Mockamos o repositório para retornar a Page
-         * when(beneficioRepository.findByBeneficiosWithoutVersion(pageableEsperado))
-         * .thenReturn(pageResponse);
-         * 
-         * // 2. ACT (Execução)
-         * Page<BeneficioConsultaProjection> resultado =
-         * beneficioService.findByBeneficiosWithoutVersion(pagina, tamanho);
-         * 
-         * // 3. ASSERT (Verificação)
-         * assertNotNull(resultado);
-         * assertEquals(1, resultado.getTotalElements()); // Verifica o total
-         * assertEquals(1, resultado.getContent().size()); // Verifica a lista interna
-         * verify(beneficioRepository).findByBeneficiosWithoutVersion(pageableEsperado);
-         * }
-         * 
-         */
         @DisplayName("Deve listar os benefícios com páginação com sucesso ")
         @Test
         void listBeneficiosWithSuccess() throws Exception {
@@ -363,7 +328,7 @@ public class TestBeneficioController {
                 if (json == null) {
                         throw new IllegalArgumentException("Erro ao converter o TransferirDTO para JSON!");
                 }
-                mockMvc.perform(put("/api/v1/transferir")
+                mockMvc.perform(put("/api/v1/beneficios/transferir")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk())
@@ -386,7 +351,7 @@ public class TestBeneficioController {
                 doThrow(new IllegalArgumentException("Saldo insuficiente para transferência"))
                                 .when(beneficioService).transfer(transferirDTO);
 
-                mockMvc.perform(put("/api/v1/transferir")
+                mockMvc.perform(put("/api/v1/beneficios/transferir")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isBadRequest())
@@ -409,7 +374,7 @@ public class TestBeneficioController {
                 doThrow(new IllegalArgumentException("Benefício não encontrado!"))
                                 .when(beneficioService).transfer(transferirDTO);
 
-                mockMvc.perform(put("/api/v1/transferir")
+                mockMvc.perform(put("/api/v1/beneficios/transferir")
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isNotFound())

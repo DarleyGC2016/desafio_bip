@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
-import { BeneficioListComponent } from './components/beneficio-list/beneficio-list.component';
+import { BeneficioListComponent } from './features/beneficio/beneficio-list/beneficio-list.component';
+
 
 export const routes: Routes = [
     {path:'', component: BeneficioListComponent},

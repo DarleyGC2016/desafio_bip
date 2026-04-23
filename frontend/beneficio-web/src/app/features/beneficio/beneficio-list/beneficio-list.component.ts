@@ -1,12 +1,15 @@
-import { AfterViewInit, Component, OnInit, signal, ViewChild } from '@angular/core';
-import { BeneficioService } from '../../services/beneficio.service';
-import { Beneficio } from '../../models/beneficio';
+import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
+import { BeneficioService } from '../../../core/services/beneficio.service';
+import { Beneficio } from '../../../models/beneficio';
 import { CommonModule } from '@angular/common';
-import { TextoBrevePipe } from '../../pipes/texto-breve-pipe';
+import { TextoBrevePipe } from '../../../shared/pipes/texto-breve-pipe';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { PageResponse } from '../../models/page';
+import { PageResponse } from '../../../models/page';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-beneficio-list',
@@ -15,14 +18,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     TextoBrevePipe,
     MatTableModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatIconModule,
+    MatButton
   ],
   templateUrl: './beneficio-list.component.html',
   styleUrl: './beneficio-list.component.css',
 })
 export class BeneficioListComponent implements AfterViewInit {
   
-  displayedColumns = signal<string[]>(['Id', 'Nome', 'Descrição', 'Valor']);
+  displayedColumns = signal<string[]>(['Id', 'Nome', 'Descrição', 'Valor', "Ações"]);
   dataSource = new MatTableDataSource<Beneficio>();
   isLoading = signal(false);
 

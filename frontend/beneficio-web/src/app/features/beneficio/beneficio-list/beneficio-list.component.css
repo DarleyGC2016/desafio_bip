@@ -20,9 +20,12 @@ table {
 .table-container {
   position: relative;
   min-height: 200px;
+  margin-top: 90px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .example-card {
-  max-width: 400px;
-  margin-bottom: 8px;
+  padding: 10px;
+  box-shadow: 1.5px 1.5px #888888;
 }
