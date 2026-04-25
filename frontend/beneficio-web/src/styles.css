@@ -4,4 +4,16 @@
 :root {
     --mdc-theme-primary: #1976d2;
     --mdc-theme-secondary: #03a9f4;
+
+    .mat-mdc-raised-button.mat-warn,
+    .mat-mdc-flat-button.mat-warn {
+        --mdc-filled-button-container-color: var(--mat-sys-error);
+        --mdc-filled-button-label-text-color: var(--mat-sys-on-error);
+    }
+
+    .mat-mdc-raised-button.mat-warn {
+        background-color: var(--mat-sys-error-container) !important;
+        color: var(--mat-sys-on-error-container) !important;
+    }
+
 }

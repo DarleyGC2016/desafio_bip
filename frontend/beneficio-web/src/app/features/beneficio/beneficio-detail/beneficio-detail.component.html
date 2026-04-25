@@ -1,0 +1,29 @@
+@if (benficio(); as data){
+    <form class="example-form">
+        <mat-card appearance="outlined" class="example-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <span>Benefício</span>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <input-global [data]="data.nome" [label]="'Nome'" />
+                <input-global [data]="(data.valor| currency: 'BRL')??''" />
+                <input-global [data]="data.descricao" [label]="'Descrição'" />
+                <input-global [data]="data.ativo" [label]="'Habilitado'" />
+                <input-global [data]="data.version" [label]="'Versão'" />
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="acoes-button">
+                    <button matButton="filled">
+                        <mat-icon>edit</mat-icon>
+                        Editar</button>
+                    <button mat-raised-button color="warn">
+                        <mat-icon>delete</mat-icon>
+                        Excluir
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+}

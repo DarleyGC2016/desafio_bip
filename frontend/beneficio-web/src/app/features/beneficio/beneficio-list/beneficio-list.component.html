@@ -31,7 +31,7 @@
                 <ng-container matColumnDef="Ações">
                     <th mat-header-cell *matHeaderCellDef>{{displayedColumns()[4]}}</th>
                     <td mat-cell *matCellDef="let element">
-                        <button mat-icon-button matButton="filled" color="warn" type="button">
+                        <button mat-icon-button matButton="filled" type="button" (click)="enviarBeneficioEscolhido(element.id)">
                             <mat-icon>visibility</mat-icon>
                             Detalhes
                         </button>

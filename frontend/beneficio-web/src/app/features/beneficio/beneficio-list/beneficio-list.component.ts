@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-beneficio-list',
@@ -27,21 +28,24 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './beneficio-list.component.css',
 })
 export class BeneficioListComponent implements AfterViewInit {
-  
+
   displayedColumns = signal<string[]>(['Id', 'Nome', 'Descrição', 'Valor', "Ações"]);
   dataSource = new MatTableDataSource<Beneficio>();
   isLoading = signal(false);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private beneficioService: BeneficioService) { }
+
+  constructor(private beneficioService: BeneficioService, 
+    private router: Router
+  ) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.carregarBeneficios();
   }
 
-  carregarBeneficios() {
+  carregarBeneficios(): void {
     this.isLoading.set(true);
 
     const page = this.paginator ? this.paginator.pageIndex : 0;
@@ -50,7 +54,7 @@ export class BeneficioListComponent implements AfterViewInit {
     const tempo = new Promise(response => setTimeout(response, 600));
 
     this.beneficioService.list(page, size).subscribe({
-      next: async(response: PageResponse<Beneficio>) => {
+      next: async (response: PageResponse<Beneficio>) => {
         await tempo;
         this.dataSource.data = response.content;
         this.paginator.length = response.totalElements;
@@ -61,6 +65,12 @@ export class BeneficioListComponent implements AfterViewInit {
         this.isLoading.set(false);
       }
     });
+  }
+
+  enviarBeneficioEscolhido(id: number): void {
+        console.log('ID - beneficio: ',id);
+        
+        this.router.navigate(['/beneficios',id]);
   }
 }
 

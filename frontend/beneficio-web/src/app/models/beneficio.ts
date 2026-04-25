@@ -3,8 +3,8 @@ export interface Beneficio{
     nome: string;
     descricao: string;
     valor: number;
-    versao?: number;
-    ativo?: boolean;
+    version: number;
+    ativo: boolean;
 }
 
 export interface Transferir{
