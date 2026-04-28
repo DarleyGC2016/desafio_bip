@@ -1,6 +1,6 @@
-import { TextoBrevePipe } from './texto-breve-pipe';
+import { TextoBrevePipe } from './texto-breve.pipe';
 
-describe('DescricaoBrevePipe', () => {
+describe('TextoBrevePipe', () => {
   it('create an instance', () => {
     const pipe = new TextoBrevePipe();
     expect(pipe).toBeTruthy();

@@ -2,25 +2,39 @@
     <form class="example-form">
         <mat-card appearance="outlined" class="example-card">
             <mat-card-header>
-                <mat-card-title>
-                    <span>Benefício</span>
+                <mat-card-title class="title-card">
+                    @if (ativar() === true){
+                        <span>Benefício</span>
+                    } @else {
+                        <span>Editar Benefício</span>
+                    }
                 </mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <input-global [data]="data.nome" [label]="'Nome'" />
-                <input-global [data]="(data.valor| currency: 'BRL')??''" />
-                <input-global [data]="data.descricao" [label]="'Descrição'" />
-                <input-global [data]="data.ativo" [label]="'Habilitado'" />
-                <input-global [data]="data.version" [label]="'Versão'" />
+                <input-types [(data)]="data.nome" [label]="'Nome'" [disabled]="ativar()"/>
+                <input-area-text [(data)]="data.descricao" [label]="'Descrição'" [disabled]="ativar()" />
+                <input-moeda-real [(data)]="data.valor" [label]="'Valor'" [disabled]="ativar()" />
+                <input-types [data]="data.ativo | ativoResposta" [label]="'Habilitado'" />
+                <input-types [data]="data.version" [label]="'Versão'" />
             </mat-card-content>
             <mat-card-actions>
                 <div class="acoes-button">
-                    <button matButton="filled">
-                        <mat-icon>edit</mat-icon>
-                        Editar</button>
-                    <button mat-raised-button color="warn">
-                        <mat-icon>delete</mat-icon>
-                        Excluir
+                    
+                    <button matButton="filled" (click)="editarBeneficio(data.nome,data.descricao, data.valor); " type="button">
+                        <mat-icon>{{mudaIcone()}}</mat-icon>
+                        @if (ativar()) {
+                            Editar
+                        } @else {                        
+                            Salvar
+                        }
+                    </button>
+                    <button mat-raised-button color="warn" (click)="cancelOrDelete()" type="button">
+                        <mat-icon>{{mudaIconeDelete()}}</mat-icon>
+                        @if (ativar()) {
+                            Excluir
+                        } @else {
+                            Cancelar
+                        }
                     </button>
                 </div>
             </mat-card-actions>

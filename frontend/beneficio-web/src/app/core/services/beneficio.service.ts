@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Beneficio, Transferir } from '../../models/beneficio';
-import { PageResponse } from '../../models/page';
+import { Beneficio, Transferir } from '../../shared/models/beneficio';
+import { PageResponse } from '../../shared/models/page';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +19,8 @@ export class BeneficioService {
     return this.http.get<PageResponse<Beneficio>>(`${this.api}`, { params });
   };
 
-  update(id: number, beneficio: Beneficio): Observable<Beneficio> {
-    return this.http.put<Beneficio>(`${this.api}/${id}`, beneficio);
+  update(id: number, beneficio: Beneficio): Observable<string> {
+    return this.http.put<string>(`${this.api}/${id}`, beneficio, { responseType: 'text' as 'json' });
   }
 
   delete(id: number): Observable<void> {

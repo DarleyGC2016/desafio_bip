@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'textoBreve',
 })
 export class TextoBrevePipe implements PipeTransform {
-  transform(texto: string, limite: number = 20): string {
+   transform(texto: string, limite: number = 20): string {
     if (!texto) return '';
     return texto.length > limite? texto.substring(0, limite) + '...' : texto;
   }

@@ -1,5 +1,5 @@
 .example-card {
-    margin-top: 80px;
+    margin-top: 84.5px;
     margin-left: 280px;
     margin-right: 280px;
     margin-bottom: 80px;
@@ -17,4 +17,10 @@
 
 .example-form {
     width: 100%;
+}
+
+.title-card{
+    margin-right: 7.5cm;
+    margin-left: 7.5cm;
+    margin-bottom: 10px;
 }

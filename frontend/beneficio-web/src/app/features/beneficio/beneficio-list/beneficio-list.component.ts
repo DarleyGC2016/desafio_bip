@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
-import { BeneficioService } from '../../../core/services/beneficio.service';
-import { Beneficio } from '../../../models/beneficio';
 import { CommonModule } from '@angular/common';
-import { TextoBrevePipe } from '../../../shared/pipes/texto-breve-pipe';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { PageResponse } from '../../../models/page';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
+
+import { Beneficio } from '../../../shared/models/beneficio';
+import { BeneficioService } from '../../../core/services/beneficio.service';
+import { PageResponse } from '../../../shared/models/page';
+import { TextoBrevePipe } from '../../../shared/pipes/texto-breve/texto-breve.pipe';
 
 @Component({
   selector: 'app-beneficio-list',

@@ -1,0 +1,5 @@
+<mat-form-field class="example-full-width">
+    <mat-label>{{label()}}</mat-label>
+    <input matInput [(ngModel)]="data" [mask]="'separator.2'" prefix="R$ "
+        thousandSeparator="." decimalMarker="," [disabled]="disabled()"  [leadZero]="true" [dropSpecialCharacters]="true" >
+</mat-form-field>
