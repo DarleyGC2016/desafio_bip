@@ -20,7 +20,7 @@
             <mat-card-actions>
                 <div class="acoes-button">
                     
-                    <button matButton="filled" (click)="editarBeneficio(data.nome,data.descricao, data.valor); " type="button">
+                    <button matButton="filled" (click)="editOrSave(data.nome,data.descricao, data.valor); " type="button">
                         <mat-icon>{{mudaIcone()}}</mat-icon>
                         @if (ativar()) {
                             Editar

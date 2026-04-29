@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,6 +12,7 @@ import { AtivoRespostaPipe } from '../../../shared/pipes/ativo/ativo-resposta.pi
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputMoedaRealComponent } from '../../../shared/components/input-moeda-real/input-moeda-real.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-beneficio-detail',
@@ -29,7 +30,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     InputMoedaRealComponent
   ],
   templateUrl: './beneficio-detail.component.html',
-  styleUrl: './beneficio-detail.component.css',
+  styleUrl: './beneficio-detail.component.css'
 })
 
 export class BeneficioDetailComponent implements OnInit {
@@ -45,8 +46,10 @@ export class BeneficioDetailComponent implements OnInit {
   actionButton: string = 'edit';
 
 
-  constructor(private service: BeneficioService,
-    private _snack: MatSnackBar
+  constructor(
+    private service: BeneficioService,
+    private _snack: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +58,7 @@ export class BeneficioDetailComponent implements OnInit {
 
   buscarUnicoBeneficio(): void {
     this.idRouter = Number(this.id);
-    
+
     this.service.detail(this.idRouter).subscribe({
       next: data => {
         this.benficio.set(data);
@@ -66,7 +69,7 @@ export class BeneficioDetailComponent implements OnInit {
     })
   }
 
-  editarBeneficio(nome: string, descricao: string, valor: number,) {
+  editOrSave(nome: string, descricao: string, valor: number,) {
     this.ativar.set(false);
 
     if (this.actionButton === 'save') {
@@ -118,9 +121,29 @@ export class BeneficioDetailComponent implements OnInit {
     }
   }
 
-  cancelOrDelete(){    
-    if (this.mudaIconeDelete() === 'cancel'){
+  cancelOrDelete() {
+    if (this.mudaIconeDelete() === 'cancel') {
       this.ativar.set(true);
+    } else {
+      
+      this.service.delete(this.idRouter).subscribe({
+        next: (data) => {
+          this._snack.open(data, 'Fechar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+          this.router.navigate(['/beneficios']);
+        }, error: async (err) => {
+
+          const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
+
+          this._snack.open(msgErro, 'Fechar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+
+        }
+      });
     }
   }
 
