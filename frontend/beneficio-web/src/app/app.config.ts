@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localPt from '@angular/common/locales/pt'
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 registerLocaleData(localPt);
 
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(),
     { provide: LOCALE_ID, useValue: 'pt-BR'},
-    provideEnvironmentNgxMask()
+    provideEnvironmentNgxMask(),
+    provideAnimationsAsync()
   ]
 };

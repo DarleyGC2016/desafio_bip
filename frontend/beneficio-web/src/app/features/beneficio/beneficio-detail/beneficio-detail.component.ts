@@ -13,6 +13,8 @@ import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputMoedaRealComponent } from '../../../shared/components/input-moeda-real/input-moeda-real.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DialogConfirmationComponent } from '../../../shared/components/dialog-confirmation/dialog-confirmation.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-beneficio-detail',
@@ -22,12 +24,13 @@ import { Router } from '@angular/router';
     MatCardModule,
     MatIconModule,
     MatButton,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     AtivoRespostaPipe,
     InputTypesComponent,
     InputAreaTextComponent,
-    InputMoedaRealComponent
+    InputMoedaRealComponent,
   ],
   templateUrl: './beneficio-detail.component.html',
   styleUrl: './beneficio-detail.component.css'
@@ -49,7 +52,8 @@ export class BeneficioDetailComponent implements OnInit {
   constructor(
     private service: BeneficioService,
     private _snack: MatSnackBar,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -121,30 +125,55 @@ export class BeneficioDetailComponent implements OnInit {
     }
   }
 
-  cancelOrDelete() {
+  cancelOrDelete(nome: string) {
     if (this.mudaIconeDelete() === 'cancel') {
       this.ativar.set(true);
     } else {
-      
-      this.service.delete(this.idRouter).subscribe({
-        next: (data) => {
-          this._snack.open(data, 'Fechar', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-          this.router.navigate(['/beneficios']);
-        }, error: async (err) => {
-
-          const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
-
-          this._snack.open(msgErro, 'Fechar', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-
-        }
-      });
+      this.excluicao(nome);
     }
   }
+
+  excluicao(nome: string): void {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+      width: "400px",
+      data: {
+        title: "Aviso de exclução",
+        ask: "Desaja excluir esse benefício: ",
+        dado: nome
+      }
+    });
+
+    dialogRef.afterClosed().subscribe({
+      next: (data) => {
+        if (!!data){
+          this.excluirUnicoBeneficio();
+        }
+      }
+    });
+
+  }
+
+  excluirUnicoBeneficio(): void {
+    this.service.delete(this.idRouter).subscribe({
+      next: (data) => {
+        this._snack.open(data, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+        this.router.navigate(['/beneficios']);
+      }, error: async (err) => {
+
+        const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
+
+        this._snack.open(msgErro, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+
+      }
+    });
+  }
+
+
 
 }

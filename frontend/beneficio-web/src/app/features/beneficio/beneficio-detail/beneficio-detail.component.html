@@ -28,7 +28,7 @@
                             Salvar
                         }
                     </button>
-                    <button mat-raised-button color="warn" (click)="cancelOrDelete()" type="button">
+                    <button mat-raised-button color="warn" (click)="cancelOrDelete(data.nome)" type="button">
                         <mat-icon>{{mudaIconeDelete()}}</mat-icon>
                         @if (ativar()) {
                             Excluir
