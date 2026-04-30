@@ -1,5 +1,6 @@
 .example-card {
-    margin-top: 84.5px;
+    position: relative;
+    margin-top: 10.5px;
     margin-left: 280px;
     margin-right: 280px;
     margin-bottom: 80px;

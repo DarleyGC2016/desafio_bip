@@ -1,0 +1,24 @@
+<mat-toolbar class="toolbar-container">
+    <button matIconButton type="button" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span>Sistema de Benefícios</span>
+    <span class="example-spacer"></span>
+    <button matIconButton class="example-icon favorite-icon" aria-label="Example icon-button with heart icon"
+        routerLink="/">
+        <mat-icon>home</mat-icon>
+    </button>
+</mat-toolbar>
+
+<mat-drawer-container class="sidenav-container">
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+        <mat-action-list>
+            <button mat-list-item routerLink="/" (click)="drawer.close()">Home</button>
+            <button mat-list-item routerLink="/beneficios" (click)="drawer.close()">Benefícios</button>
+             <button mat-list-item routerLink="" (click)="drawer.close()">Novo</button>
+             <button mat-list-item routerLink="" (click)="drawer.close()">Transferir</button>
+        </mat-action-list>
+
+    </mat-drawer>
+</mat-drawer-container>
