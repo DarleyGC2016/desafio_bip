@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/beneficios")
 public class BeneficioController {
 
     private final BeneficioService beneficioService;
@@ -31,7 +31,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "400", description = "Não foi possível listar os benefícios!"),
             @ApiResponse(responseCode = "404", description = "Não foi encontrado nenhum benefício no servidor!")
     })
-    @GetMapping("/beneficios")
+    @GetMapping("/todos")
     public ResponseEntity<Page<BeneficioConsultaProjection>> listBeneficiosWithoutVersion(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -44,7 +44,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "400", description = "Erro na transferência de benefícios!"),
             @ApiResponse(responseCode = "404", description = "Benefício de origem ou destino não encontrado para transferência!")
     })
-    @PutMapping("/beneficios/transferir")
+    @PutMapping("/transferir")
     public ResponseEntity<String> transfer(@RequestBody TransferirDTO transferirDTO) {
         beneficioService.transfer(transferirDTO);
         return ResponseEntity.ok("Transferência de R$" + transferirDTO.amount() + " realizada com sucesso");
@@ -55,7 +55,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "201", description = "Criado um novo Benefício com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na criação de um novo benefício!")
     })
-    @PostMapping("/beneficios")
+    @PostMapping("/novo")
     public ResponseEntity<String> saveBeneficio(@Valid @RequestBody BeneficioDTO beneficioDTO) {
         beneficioService.save(beneficioDTO);
         return ResponseEntity.ok("Beneficio salvo com sucesso!");
@@ -67,7 +67,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "400", description = "Erro na atualização do benefício!"),
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado para atualização!")
     })
-    @PutMapping("/beneficios/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<String> updateBeneficio(@PathVariable Long id,
             @Valid @RequestBody BeneficioDTO beneficioDTO) {
         beneficioService.update(id, beneficioDTO);
@@ -80,7 +80,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "400", description = "Erro na exclusão do benefício!"),
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado para exclusão!")
     })
-    @DeleteMapping("/beneficios/{id}")
+    @DeleteMapping("/excluir/{id}")
     public ResponseEntity<String> deleteBeneficio(@PathVariable Long id) {
         beneficioService.delete(id);
         return ResponseEntity.ok("Benefício excluído com sucesso!");
@@ -92,7 +92,7 @@ public class BeneficioController {
             @ApiResponse(responseCode = "400", description = "Erro na consulta do benefício!"),
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado!")
     })
-    @GetMapping("/beneficios/{id}")
+    @GetMapping("/detalhe/{id}")
     public ResponseEntity<Beneficio> detailBeneficio(@PathVariable Long id) {
         Beneficio beneficio = beneficioService.detailBeneficio(id);
         return ResponseEntity.ok(beneficio);

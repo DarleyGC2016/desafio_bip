@@ -69,7 +69,7 @@ export class BeneficioListComponent implements AfterViewInit {
   }
 
   enviarBeneficioEscolhido(id: number): void {
-        this.router.navigate(['/beneficios',id]);
+        this.router.navigate(['/beneficios/detalhe',id]);
   }
 }
 

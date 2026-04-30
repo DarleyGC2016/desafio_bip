@@ -16,23 +16,23 @@ export class BeneficioService {
     const params = new HttpParams();
     params.set("page", page.toString());
     params.set("size", size.toString());
-    return this.http.get<PageResponse<Beneficio>>(`${this.api}`, { params });
+    return this.http.get<PageResponse<Beneficio>>(`${this.api}/todos`, { params });
   };
 
   update(id: number, beneficio: Beneficio): Observable<string> {
-    return this.http.put<string>(`${this.api}/${id}`, beneficio, { responseType: 'text' as 'json' });
+    return this.http.put<string>(`${this.api}/editar/${id}`, beneficio, { responseType: 'text' as 'json' });
   }
 
   delete(id: number): Observable<string> {
-    return this.http.delete<string>(`${this.api}/${id}`, { responseType: 'text' as 'json' } );
+    return this.http.delete<string>(`${this.api}/excluir/${id}`, { responseType: 'text' as 'json' } );
   }
 
   detail(id: number): Observable<Beneficio> {
-    return this.http.get<Beneficio>(`${this.api}/${id}`);
+    return this.http.get<Beneficio>(`${this.api}/detalhe/${id}`);
   }
 
-  create(beneficio: Beneficio): Observable<Beneficio> {
-    return this.http.post<Beneficio>(`${this.api}`, beneficio);
+  create(beneficio: Beneficio): Observable<string> {
+    return this.http.post<string>(`${this.api}/novo`, beneficio, { responseType: 'text' as 'json' });
   }
 
   tranferirBeneficio(transfer: Transferir): Observable<String> {

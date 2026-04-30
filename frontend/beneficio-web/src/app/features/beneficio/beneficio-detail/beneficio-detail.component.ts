@@ -42,7 +42,7 @@ export class BeneficioDetailComponent implements OnInit {
 
   idRouter: number = 0;
 
-  benficio = signal<Beneficio | undefined>(undefined);
+  beneficio = signal<Beneficio | undefined>(undefined);
 
   ativar = signal<boolean>(true);
 
@@ -65,7 +65,7 @@ export class BeneficioDetailComponent implements OnInit {
 
     this.service.detail(this.idRouter).subscribe({
       next: data => {
-        this.benficio.set(data);
+        this.beneficio.set(data);
 
       }, error(err) {
         console.log(err);
@@ -80,7 +80,7 @@ export class BeneficioDetailComponent implements OnInit {
       const valorDecimal = Number(valor).toFixed(2);
 
       const beneficioU = {
-        ...this.benficio(),
+        ...this.beneficio(),
         nome: nome,
         descricao: descricao,
         valor: Number(valorDecimal)
@@ -92,7 +92,7 @@ export class BeneficioDetailComponent implements OnInit {
             duration: 5000,
             panelClass: ['error-snackbar']
           });
-          this.router.navigate(['/beneficios'])
+          this.router.navigate(['/beneficios/todos'])
 
         }, error: async (err) => {
           const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
@@ -161,7 +161,7 @@ export class BeneficioDetailComponent implements OnInit {
           duration: 5000,
           panelClass: ['error-snackbar']
         });
-        this.router.navigate(['/beneficios']);
+        this.router.navigate(['/beneficios/todos']);
       }, error: async (err) => {
 
         const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';

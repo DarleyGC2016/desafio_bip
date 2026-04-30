@@ -15,9 +15,9 @@
     <mat-drawer #drawer class="example-sidenav" mode="side">
         <mat-action-list>
             <button mat-list-item routerLink="/" (click)="drawer.close()">Home</button>
-            <button mat-list-item routerLink="/beneficios" (click)="drawer.close()">Benefícios</button>
-             <button mat-list-item routerLink="" (click)="drawer.close()">Novo</button>
-             <button mat-list-item routerLink="" (click)="drawer.close()">Transferir</button>
+            <button mat-list-item routerLink="/beneficios/todos" (click)="drawer.close()">Benefícios</button>
+            <button mat-list-item routerLink="/beneficios/novo" (click)="drawer.close()">Novo</button>
+            <button mat-list-item routerLink="/beneficios/transferir" (click)="drawer.close()">Transferir</button>
         </mat-action-list>
 
     </mat-drawer>
