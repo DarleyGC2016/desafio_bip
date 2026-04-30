@@ -92,6 +92,7 @@ export class BeneficioDetailComponent implements OnInit {
             duration: 5000,
             panelClass: ['error-snackbar']
           });
+          this.router.navigate(['/beneficios'])
 
         }, error: async (err) => {
           const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
