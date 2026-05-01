@@ -1,1 +1,22 @@
-<p>home works!</p>
+<div class="home-container">
+    <div class="welcome-section">
+        <h1>
+            Bem-vindo ao Gestor de Benefícios
+        </h1>
+        <p>Sua plataforma de controle e de transferência de valores entre Benefícios</p>
+    </div>
+
+    <div class="carrossel-container mat-elevation-z4">
+        <div class="carrossel-content">
+            <p class="frase-animada">
+                {{frases
+                ()[index()]}}
+            </p>
+        </div>
+        <div class="dots">
+            @for (frase of frases(); track $index) {
+                <span class="dot" [class.active]="$index === index()"></span>
+            }
+        </div>
+    </div>
+</div>
