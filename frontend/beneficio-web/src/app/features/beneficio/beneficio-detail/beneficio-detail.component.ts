@@ -9,7 +9,7 @@ import { BeneficioService } from '../../../core/services/beneficio.service';
 import { InputTypesComponent } from '../../../shared/components/input-types/input-types.component';
 import { InputAreaTextComponent } from '../../../shared/components/input-area-text/input-area-text.component';
 import { AtivoRespostaPipe } from '../../../shared/pipes/ativo/ativo-resposta.pipe';
-import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { InputMoedaRealComponent } from '../../../shared/components/input-moeda-real/input-moeda-real.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -25,8 +25,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatButton,
     MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
+    FormsModule,    
     AtivoRespostaPipe,
     InputTypesComponent,
     InputAreaTextComponent,

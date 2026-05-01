@@ -1,9 +1,8 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 import { InputMoedaRealComponent } from '../../../../shared/components/input-moeda-real/input-moeda-real.component';
 import { InputAreaTextComponent } from '../../../../shared/components/input-area-text/input-area-text.component';
 import { InputTypesComponent } from '../../../../shared/components/input-types/input-types.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -19,10 +18,8 @@ import { Router } from '@angular/router';
     CommonModule,
     MatCardModule,
     MatIconModule,
-    MatButton,
-    MatDialogModule,
+    MatButton,    
     FormsModule,
-    ReactiveFormsModule,
     InputTypesComponent,
     InputAreaTextComponent,
     InputMoedaRealComponent,
@@ -56,14 +53,14 @@ export class BeneficioFormComponent {
           });
           this.router.navigate(['/beneficios/todos']);
       }, error: async (err) => {
-          const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
+          const msgErro = await err.error?.message || err.error || 'Erro ao cadastrar benefício';
 
           this._snack.open(msgErro, 'Fechar', {
             duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
-    })
+    });
   }
 
   cancelar(): void{

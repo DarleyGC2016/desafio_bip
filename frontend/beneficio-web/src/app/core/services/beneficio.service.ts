@@ -35,8 +35,8 @@ export class BeneficioService {
     return this.http.post<string>(`${this.api}/novo`, beneficio, { responseType: 'text' as 'json' });
   }
 
-  tranferirBeneficio(transfer: Transferir): Observable<String> {
-    return this.http.put<String>(`${this.api}/transferir`, transfer, { responseType: 'text' as 'json' });
+  tranferirBeneficio(transfer: Transferir): Observable<string> {
+    return this.http.put<string>(`${this.api}/transferir`, transfer, { responseType: 'text' as 'json' });
   }
 
 }
