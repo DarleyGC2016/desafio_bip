@@ -20,6 +20,10 @@ html {
         container-text-color: var(--mat-sys-on-primary),
       )
   );
+
+  .mat-elevation-z4{
+    @include mat.elevation(4);
+  }
 }
 
 body {

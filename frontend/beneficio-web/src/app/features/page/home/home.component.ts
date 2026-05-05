@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [MatIcon],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -11,7 +12,7 @@ frases = signal<string[]>([
     "🚀 Comprometido com a excelência técnica e evolução constante .",
     "💡 Transformando desafios complexos em soluções simples e eficientes.",
     "🤝 Pronto para somar ao time da BIP – Business Integration Partners com foco e proatividade.",
-    "🛠️ Especialista em construir software com códigos limpos e que facilita numa fácil manutenção."
+    "🛠️ Especialista em construir software com códigos limpos e fácil manutenção."
   ]);
 
   index = signal<number>(0);
