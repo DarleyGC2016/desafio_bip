@@ -9,5 +9,4 @@ import { NavBarComponent } from "./shared/components/nav-bar/nav-bar/nav-bar.com
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('beneficio-web');
 }

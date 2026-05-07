@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-transferir-form',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,

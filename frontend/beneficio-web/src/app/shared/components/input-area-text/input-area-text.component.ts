@@ -4,6 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'input-area-text',
+  standalone: true,
   imports: [MatInputModule, MatFormFieldModule, FormsModule],
   templateUrl: './input-area-text.component.html',
   styleUrl: './input-area-text.component.css',

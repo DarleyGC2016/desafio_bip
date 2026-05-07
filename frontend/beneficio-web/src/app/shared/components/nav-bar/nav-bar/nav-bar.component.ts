@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'nav-bar',
+  standalone: true,
   imports: [
     MatToolbarModule,
     MatButtonModule,

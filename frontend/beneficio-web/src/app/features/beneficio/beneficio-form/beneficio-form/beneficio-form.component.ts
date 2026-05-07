@@ -14,11 +14,12 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-beneficio-form',
+  standalone: true,
   imports: [
     CommonModule,
     MatCardModule,
     MatIconModule,
-    MatButton,    
+    MatButton,
     FormsModule,
     InputTypesComponent,
     InputAreaTextComponent,
@@ -36,7 +37,7 @@ export class BeneficioFormComponent {
     private _snack: MatSnackBar,
     private router: Router) { }
 
- 
+
   salvar() {
     const novoBeneficio = {
       ...this.beneficio(),
@@ -44,26 +45,26 @@ export class BeneficioFormComponent {
       descricao: this.beneficio().descricao,
       valor: this.beneficio().valor
     } as Beneficio;
-    
-    this.service.create(novoBeneficio).subscribe({
-      next: (data) =>{
-          this._snack.open(data, 'Fechar', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-          this.router.navigate(['/beneficios/todos']);
-      }, error: async (err) => {
-          const msgErro = await err.error?.message || err.error || 'Erro ao cadastrar benefício';
 
-          this._snack.open(msgErro, 'Fechar', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-        }
+    this.service.create(novoBeneficio).subscribe({
+      next: (data) => {
+        this._snack.open(data, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+        this.router.navigate(['/beneficios/todos']);
+      }, error: async (err) => {
+        const msgErro = await err.error?.message || err.error || 'Erro ao cadastrar benefício';
+
+        this._snack.open(msgErro, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+      }
     });
   }
 
-  cancelar(): void{
+  cancelar(): void {
     this.router.navigate([""]);
   }
 }

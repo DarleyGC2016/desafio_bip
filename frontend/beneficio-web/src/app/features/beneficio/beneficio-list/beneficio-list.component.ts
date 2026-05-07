@@ -15,6 +15,7 @@ import { TextoBrevePipe } from '../../../shared/pipes/texto-breve/texto-breve.pi
 
 @Component({
   selector: 'app-beneficio-list',
+  standalone: true,
   imports: [
     CommonModule,
     TextoBrevePipe,
