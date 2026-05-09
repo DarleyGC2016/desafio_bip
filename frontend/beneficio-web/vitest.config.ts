@@ -1,4 +1,4 @@
-import { configDefaults, defineConfig } from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -6,11 +6,14 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html'],
-      include: ['src/app/**/*.ts'],
-      exclude: ['**/*.spec.ts', 'src/main.ts'],
+      reporter: ['text', 'html', 'clover', 'json'],
+      include: ['src/app/**/*.ts', 'src/app/**/*.spec.ts'],
+      exclude: ['src/main.ts'],
+      enabled: true,
       reportOnFailure: true,
-    },
-    exclude: [...configDefaults.exclude, 'src/main.ts'],
+      thresholds: {
+        autoUpdate: true,          
+      },
+    }
   },
 });

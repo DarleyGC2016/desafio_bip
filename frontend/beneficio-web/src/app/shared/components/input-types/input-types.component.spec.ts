@@ -1,8 +1,9 @@
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InputTypesComponent } from './input-types.component';
 
 
-describe('InputGlobalComponent', () => {
+describe('InputTypesComponent', () => {
   let component: InputTypesComponent;
   let fixture: ComponentFixture<InputTypesComponent>;
 

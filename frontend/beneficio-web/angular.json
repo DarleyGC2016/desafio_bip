@@ -84,6 +84,7 @@
           "options": {
             "coverage": true,
             "runnerConfig": "vitest.config.ts",
+            "coverageInclude": [],
             "browsers": [
               "chromium"
             ]

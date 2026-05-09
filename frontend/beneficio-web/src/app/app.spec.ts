@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import { provideRouter } from '@angular/router';
@@ -16,4 +17,11 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
   
+  it('Deve renderizar o template', () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    
+    expect(fixture.nativeElement).toBeTruthy();
+  });
+
 });
