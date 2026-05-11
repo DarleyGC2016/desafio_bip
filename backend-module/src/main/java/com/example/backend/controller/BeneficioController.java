@@ -47,7 +47,7 @@ public class BeneficioController {
     @PutMapping("/transferir")
     public ResponseEntity<String> transfer(@RequestBody TransferirDTO transferirDTO) {
         beneficioService.transfer(transferirDTO);
-        return ResponseEntity.ok("Transferência de R$" + transferirDTO.amount() + " realizada com sucesso");
+        return ResponseEntity.ok("Transferência de R$" + transferirDTO.amount() + " realizada com sucesso!");
     }
 
     @Operation(summary = "Cria um novo benefício", description = "Endpoint para cadastrar benefício")
@@ -88,7 +88,7 @@ public class BeneficioController {
 
     @Operation(summary = "Detalha um benefício", description = "Detalhar um unico benefício")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Benefício detalhado com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Realizada busca por detalhes de um Benefício com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na consulta do benefício!"),
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado!")
     })

@@ -83,8 +83,8 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "coverage": true,
-            "runnerConfig": "vitest.config.ts",
             "coverageInclude": [],
+            "runnerConfig": "vitest.config.ts",
             "browsers": [
               "chromium"
             ]
