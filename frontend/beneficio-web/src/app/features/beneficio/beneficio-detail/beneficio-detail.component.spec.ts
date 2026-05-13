@@ -10,7 +10,6 @@ import { of, throwError } from 'rxjs';
 import { Beneficio } from '../../../shared/models/beneficio';
 import { routes } from '../../../app.routes';
 import { Location } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationComponent } from '../../../shared/components/dialog-confirmation/dialog-confirmation.component';
 
 describe('BeneficioDetailComponent', () => {

@@ -63,7 +63,7 @@ export class BeneficioListComponent implements AfterViewInit {
         this.isLoading.set(false);
       },
       error: (error) => {
-        console.error('Erro ao carregar benefícios deste enpoint:', error.url);
+        console.error('Erro ao carregar benefícios', error.url);
         this.isLoading.set(false);
       }
     });
@@ -72,5 +72,6 @@ export class BeneficioListComponent implements AfterViewInit {
   enviarBeneficioEscolhido(id: number): void {
         this.router.navigate(['/beneficios/detalhe',id]);
   }
+  
 }
 
