@@ -21,7 +21,7 @@
                 <div class="acoes-button">
                     
                     <button matButton="filled" (click)="editOrSave(data.nome,data.descricao, data.valor); " type="submit">
-                        <mat-icon>{{mudaIcone()}}</mat-icon>
+                        <mat-icon>{{trocaIcone('edit', 'save')}}</mat-icon>
                         @if (ativar()) {
                             Editar
                         } @else {                        
@@ -29,7 +29,7 @@
                         }
                     </button>
                     <button mat-raised-button color="warn" (click)="cancelOrDelete(data.nome)" type="button">
-                        <mat-icon>{{mudaIconeDelete()}}</mat-icon>
+                        <mat-icon>{{trocaIcone('delete', 'cancel')}}</mat-icon>
                         @if (ativar()) {
                             Excluir
                         } @else {

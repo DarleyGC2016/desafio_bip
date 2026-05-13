@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,7 @@ import { BeneficioService } from '../../../core/services/beneficio.service';
 import { InputTypesComponent } from '../../../shared/components/input-types/input-types.component';
 import { InputAreaTextComponent } from '../../../shared/components/input-area-text/input-area-text.component';
 import { AtivoRespostaPipe } from '../../../shared/pipes/ativo/ativo-resposta.pipe';
-import { FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { InputMoedaRealComponent } from '../../../shared/components/input-moeda-real/input-moeda-real.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatIconModule,
     MatButton,
     MatDialogModule,
-    FormsModule,    
+    FormsModule,
     AtivoRespostaPipe,
     InputTypesComponent,
     InputAreaTextComponent,
@@ -44,9 +44,6 @@ export class BeneficioDetailComponent implements OnInit {
   beneficio = signal<Beneficio | undefined>(undefined);
 
   ativar = signal<boolean>(true);
-
-  actionButton: string = 'edit';
-
 
   constructor(
     private service: BeneficioService,
@@ -72,80 +69,72 @@ export class BeneficioDetailComponent implements OnInit {
     })
   }
 
-  editOrSave(nome: string, descricao: string, valor: number,) {
-    this.ativar.set(false);
+  editOrSave(nome: string, descricao: string, valor: number): void {
 
-    if (this.actionButton === 'save') {
-      const valorDecimal = Number(valor).toFixed(2);
 
-      const beneficioU = {
-        ...this.beneficio(),
-        nome: nome,
-        descricao: descricao,
-        valor: Number(valorDecimal)
-      } as Beneficio;
-
-      this.service.update(this.idRouter, beneficioU).subscribe({
-        next: (dado) => {
-          this._snack.open(dado, 'Fechar', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-          this.router.navigate(['/beneficios/todos'])
-
-        }, error: async (err) => {
-          const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
-
-          this._snack.open(msgErro, 'Fechar', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-
-        }
-      });
-    }
-
-  }
-
-  mudaIcone() {
-    if (this.ativar() === true) {
-      this.actionButton = "edit";
-      return "edit"
+    if (this.trocaIcone('edit', 'save') === 'edit') {
+      this.ativar.set(false);
     } else {
-      this.actionButton = "save";
-      return "save"
+      this.salvarEdicao(nome, descricao, valor);
     }
+
   }
 
-  mudaIconeDelete(): string {
-    if (this.ativar() === true) {
-      return "delete";
-    } else {
-      return "cancel"
-    }
+  salvarEdicao(nome: string, descricao: string, valor: number) {
+    const valorDecimal = Number(valor).toFixed(2);
+
+    const beneficioU = {
+      ...this.beneficio(),
+      nome: nome,
+      descricao: descricao,
+      valor: Number(valorDecimal)
+    } as Beneficio;
+
+    this.service.update(this.idRouter, beneficioU).subscribe({
+      next: (dado) => {
+        this._snack.open(dado, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+        this.router.navigate(['/beneficios/todos'])
+
+      }, error: async (err) => {
+        const msgErro = await err.error?.message || err.error || 'Erro ao atualizar benefício';
+
+        this._snack.open(msgErro, 'Fechar', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+
+      }
+    });
   }
 
-  cancelOrDelete(nome: string) {
-    if (this.mudaIconeDelete() === 'cancel') {
+  trocaIcone(iconeUm: string, iconeDois: string): string {
+    return (this.ativar()) ? iconeUm : iconeDois;
+  }
+
+  cancelOrDelete(nomeBeneficio: string) {
+    if (this.trocaIcone('delete', 'cancel') === 'cancel') {
       this.ativar.set(true);
     } else {
-      this.excluicao(nome);
+      this.excluicao(nomeBeneficio);
     }
   }
 
-  excluicao(nome: string): void {
+  excluicao(nomeBeneficio: string): void {
     const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       width: "400px",
       data: {
         title: "Aviso de exclução",
         ask: "Desaja excluir esse benefício: ",
-        dado: nome
+        dado: nomeBeneficio
       }
     });
 
     dialogRef.afterClosed().subscribe({
       next: (data) => {
-        if (!!data){
+        if (!!data) {
           this.excluirUnicoBeneficio();
         }
       }

@@ -11,7 +11,9 @@ export default defineConfig({
       exclude: [
         'src/app/app.config.ts',
         'src/app/**/*.spec.ts', 
-        'src/main.ts'],
+        'src/main.ts',
+        'src/app/shared/models/*.ts'
+      ],
       enabled: true,
       reportOnFailure: true,
       thresholds: {

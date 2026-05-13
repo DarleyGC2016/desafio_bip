@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import { provideRouter, Router } from '@angular/router';
 import { routes } from './app.routes';
