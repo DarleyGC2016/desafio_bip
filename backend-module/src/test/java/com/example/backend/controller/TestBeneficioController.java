@@ -335,7 +335,7 @@ public class TestBeneficioController {
                                 .contentType("application/json")
                                 .content(json))
                                 .andExpect(status().isOk())
-                                .andExpect(content().string("Transferência de R$" + amount + " realizada com sucesso"));
+                                .andExpect(content().string("Transferência de R$" + amount + " realizada com sucesso!"));
 
                 verify(beneficioService).transfer(transferirDTO);
         }
