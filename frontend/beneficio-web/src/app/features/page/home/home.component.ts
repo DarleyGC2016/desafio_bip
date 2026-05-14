@@ -8,8 +8,8 @@ import { MatIcon } from "@angular/material/icon";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit, OnDestroy{
-frases = signal<string[]>([
+export class HomeComponent implements OnInit, OnDestroy {
+  frases = signal<string[]>([
     "🚀 Comprometido com a excelência técnica e evolução constante .",
     "💡 Transformando desafios complexos em soluções simples e eficientes.",
     "🤝 Pronto para somar ao time da BIP – Business Integration Partners com foco e proatividade.",
@@ -20,9 +20,13 @@ frases = signal<string[]>([
   intervalId: any;
 
   ngOnInit(): void {
-      this.intervalId = setInterval(()=> {
-        this.index.update(i => (i + 1) % this.frases().length);
-      }, 5000);
+    this.intervaloLetreiro();
+  }
+
+  intervaloLetreiro(): void {
+    this.intervalId = setInterval(() => {
+      this.index.update(i => (i + 1) % this.frases().length);
+    }, 5000);
   }
 
   ngOnDestroy(): void {
@@ -31,5 +35,5 @@ frases = signal<string[]>([
     }
   }
 
-  
+
 }
