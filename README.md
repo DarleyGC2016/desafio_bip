@@ -42,7 +42,7 @@ Depois de ir no repositório [desafio bip](https://github.com/DarleyGC2016/desaf
      ```
         mvn clean package
      ```
-     - No [frontend](frontend\beneficio-web) use esse comando:
+     - No [frontend](frontend/beneficio-web) use esse comando:
 
     ```
      npm install
