@@ -1,4 +1,7 @@
-# ☕ Backend - Gestor de Benefícios (Spring Boot)
+## Indice
+- [Introdução](#-introdução)
+
+# ☕ Introdução
 
 Este é o módulo de inteligência e regras de negócio do sistema, desenvolvido em Java utilizando o ecossistema Spring Boot. A API foi desenhada seguindo os princípios RESTful, com validações de dados centralizadas e documentação viva.
 
