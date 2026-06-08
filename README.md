@@ -1,81 +1,140 @@
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Angular](https://img.shields.io/badge/Angular-21-red)
+![Node.js](https://img.shields.io/badge/Node.js-LTS-green)
+![Maven](https://img.shields.io/badge/Maven-3.9-blue)
 
-## Gestão de Benefícios
+# Gestão de Benefícios
 
-- [📌 Introdução](#-introdução)
-- [🏗️ Desrição do desafio](#️-descrição-do-desafio)
-- [🛠️ Instalações para o desafio](#️-instalações-para-o-desafio)
-- [⚙️ Configuração de ambiente](#️-configuração-de-ambiente)
-- [☕ Modulos do projeto](#-modulos-do-projeto)
-s
+## 🗂️ Índice
 
-## 📌 Introdução
+- [📌 Resumo](#-resumo)
+- [🏗️ Descrição do Desafio](#️-descrição-do-desafio)
+- [📁 Estrutura do Projeto](#-estrutura-do-projeto)
+- [🧩 Arquitetura do Sistema](#-arquitetura-do-sistema)
+- [🛠️ Instalação do Projeto](#️-instalação-do-projeto)
+- [⚙️ Configuração de Ambiente](#️-configuração-de-ambiente)
+- [☕ Módulos do Projeto](#-módulos-do-projeto)
 
-O Gestão de Benefícios é um sistema robusto desenvolvido para controlar, manipular e realizar a transferência de valores entre diferentes tipos de benefícios. A plataforma foi desenhada para ser operada de forma centralizada pelo departamento de Recursos Humanos (RH), facilitando a distribuição e o ajuste de auxílios para os colaboradores (funcionários). Sua arquitetura flexível expande os limites do cenário corporativo tradicional, tornando o sistema perfeitamente adaptável para:Iniciativa Privada e Empresas Públicas: Gestão integrada de pacotes de benefícios e saldos de colaboradores.Governo e Esfera Pública: Controle centralizado, auditoria e distribuição de auxílios e benefícios sociais diretamente para a população.
+## 📌 Resumo
+
+O Gestão de Benefícios é um sistema desenvolvido para controlar, gerenciar e realizar a transferência de valores entre diferentes tipos de benefícios. A plataforma foi projetada para ser operada de forma centralizada pelo departamento de Recursos Humanos (RH), facilitando a distribuição para os funcionários.
 
 
 ## 🏗️ Descrição do Desafio
 
-Essa é descrição do desafio [Clique aqui](docs/README.md).
+A descrição original do desafio pode ser acessada aqui: [Documentação do desafio](docs/README.md).
+
+
+## 📁 Estrutura do Projeto
+
+```text
+desafio_bip/
+├── backend-module/
+├── ejb-module/
+├── frontend/
+│   └── beneficio-web/
+├── docs/
+└── db/
+```
+
+  
+## 🧩 Arquitetura do Sistema
+
+```mermaid
+flowchart LR
+
+A[Frontend - Angular] --> B[Backend Module - Spring Boot] --> C[EJB Module - Regras de Negócio] --> D[(Banco de Dados)]
+```
+
+O sistema é composto por três camadas principais:
+
+- Frontend em Angular, responsável pela interface do usuário
+- Backend em Spring Boot, responsável pelas APIs e controle da aplicação
+- Módulo EJB, responsável pelas regras de negócio internas
+- Banco de dados para persistência das informações
+
+O `ejb-module` não é executado diretamente, sendo utilizado como dependência interna ao `backend-module`.
+
+## 🛠️ Instalação do Projeto
+
+Antes de clonar o projeto, instale as dependências abaixo:
+
+### Pré-requisitos
+ - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+ - [Maven 3.9.12](https://maven.apache.org/docs/3.9.12/release-notes.html)
+ - [Node.js 24.15.0 LTS](https://nodejs.org/en/download)
+
+Após instalar o Node.js, instale o Angular CLI globalmente:
+
+```bash
+npm install -g @angular/cli@21.2.7 
+```
+---
+
+### Clonar o projeto
+
+```bash
+git clone https://github.com/DarleyGC2016/desafio_bip.git
+```
+---
+
+### Build do Backend
+
+Abra o terminal na raiz do projeto e execute:
+
+```bash
+mvn clean package
+```
+---
+
+### Configuração do Frontend
+
+Acesse a pasta do **[Frontend](frontend/beneficio-web)**, no terminal use esse comando:
+
+```bash
+cd frontend/beneficio-web
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
 
 
 ## ⚙️ Configuração de Ambiente
 
-Para configurar o ambiente no Windoows(10,11) para o Desafio precisa:
- - Para o **Maven** copie o endereço da pasta, onde foi dezipado  e Crie uma variavel:
-    ``` 
-      Nome de variavel:  M2_HOME;
-      Diretório: cole o endereço do maven;
-      Adicione na path: %M2_HOME%/bin.
-    ```
- - Para o **Java** copie este endereço(C:\Program Files\Java\jdk-17) e crie uma variavel de ambiente:
-    ```
-      Nome de variavel:  JAVA_HOME;
-      Diretório: cole o endereço do Java;
-      Adicione na path: %JAVA_HOME%/bin.
-   ```
-No repositório deste desafioo no **Github**, faça um clone na pasta que você criou e use comando:
-```
-git clone https://github.com/DarleyGC2016/desafio_bip.git
+Para configurar o ambiente no Windows(10 ou 11):
+
+### Maven
+
+Crie uma variável:
+
+```text 
+Nome de variável:  M2_HOME
+Diretório: caminho da pasta do Maven
+Adicionar ao PATH: %M2_HOME%\bin
 ```
 
-## 🛠️ Instalações para o Desafio
+### Java
 
-Antes de clonar o projeto(Desafio) do repositorio
- - Download do [maven versão 3.9.12](https://maven.apache.org/docs/3.9.12/release-notes.html), deszipar numa pasta;
- - Download do [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html), instale e o Java;
- - Download do [node v24.15.0 LTS](https://nodejs.org/en/download) e instalar;
- - Depois de instalar o node. Instale o Angular CLI, use esse comando:
-    ```
-    npm install -g @angular/cli@21.2.7 
-    ```
+Crie uma variável de ambiente:
 
-Após que clonar o desafio:
-   - Abra a pasta do projeto e no terminal no vscode, use esse comando:
-     - Este comando é para o backend:
-     
-     ```
-        mvn clean package
-     ```
-
-     - No [frontend](frontend/beneficio-web), no terminal use esse comando:
-
-     ```
-      cd .\frontend\beneficio-web\ ou cd frontend\beneficio-web\'  
-     ```
-     depois:
-
-     ```
-     npm install
-     ```
-
-## ☕ Modulos do projeto
-
-Neste projeto existes dois modulos um [backend-module](backend-module/README.md) e outro é o [ejb-module](ejb-module/README.md)
-
+```text
+Nome de variável:  JAVA_HOME
+Diretório: C:\Program Files\Java\jdk-17
+Adicionar ao PATH: %JAVA_HOME%\bin
 ```
-  <modules>
-    <module>ejb-module</module>
-    <module>backend-module</module>
-  </modules>
+
+## ☕ Módulos do Projeto
+
+Neste projeto existem dois módulos principais: [backend-module](backend-module/README.md) e  [ejb-module](ejb-module/README.md)
+
+Estrutura declarada no pom.xml: 
+
+```xml
+<modules>
+  <module>ejb-module</module>
+  <module>backend-module</module>
+</modules>
 ```
-  
