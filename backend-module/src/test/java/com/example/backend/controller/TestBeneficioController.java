@@ -75,7 +75,7 @@ public class TestBeneficioController {
                 mockMvc.perform(post(API +"/novo")
                                 .contentType("application/json")
                                 .content(json))
-                                .andExpect(status().isOk())
+                                .andExpect(status().isCreated())
                                 .andExpect(content().string("Beneficio salvo com sucesso!"));
 
                 verify(beneficioService).save(beneficioDTO);

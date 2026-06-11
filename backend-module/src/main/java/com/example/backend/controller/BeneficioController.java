@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class BeneficioController {
     @Operation(summary = "Lista benefícios disponíveis", description = "listar benefícios disponíveis organizados por páginas")
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Benefícios listados com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Benefícios listados com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Não foi possível listar os benefícios!"),
             @ApiResponse(responseCode = "404", description = "Não foi encontrado nenhum benefício no servidor!")
     })
@@ -38,7 +39,7 @@ public class BeneficioController {
         return ResponseEntity.ok(beneficioService.findByBeneficiosWithoutVersion(page, size));
     }
 
-    @Operation(summary = "Realiza a transferência de benefícios entre contas", description = "Transferir dinheiro entre benefícioss, especificando o valor e os IDs dos benefícios de origem e destino")
+    @Operation(summary = "Realiza a transferência de benefícios entre contas", description = "Transferir dinheiro entre benefícios, especificando o valor e os IDs dos benefícios de origem e destino")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Transferência realizada com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na transferência de benefícios!"),
@@ -58,12 +59,12 @@ public class BeneficioController {
     @PostMapping("/novo")
     public ResponseEntity<String> saveBeneficio(@Valid @RequestBody BeneficioDTO beneficioDTO) {
         beneficioService.save(beneficioDTO);
-        return ResponseEntity.ok("Beneficio salvo com sucesso!");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Beneficio salvo com sucesso!");
     }
 
     @Operation(summary = "Atualiza um benefício", description = "Atualizar um benefício existente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Benefício atualizado com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Benefício atualizado com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na atualização do benefício!"),
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado para atualização!")
     })
@@ -76,17 +77,17 @@ public class BeneficioController {
 
     @Operation(summary = "Exclui um benefício", description = "Excluir um benefício")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Benefício excluído com sucesso!"),
+            @ApiResponse(responseCode = "200", description = "Benefício excluído com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na exclusão do benefício!"),
             @ApiResponse(responseCode = "404", description = "Benefício não encontrado para exclusão!")
     })
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<String> deleteBeneficio(@PathVariable Long id) {
         beneficioService.delete(id);
-        return ResponseEntity.ok("Benefício excluído com sucesso!");
+        return ResponseEntity.status(HttpStatus.OK).body("Benefício excluído com sucesso!");
     }
 
-    @Operation(summary = "Detalha um benefício", description = "Detalhar um unico benefício")
+    @Operation(summary = "Detalha um benefício", description = "Detalhar um único benefício")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Realizada busca por detalhes de um Benefício com sucesso!"),
             @ApiResponse(responseCode = "400", description = "Erro na consulta do benefício!"),
