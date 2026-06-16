@@ -24,7 +24,7 @@
 ## ☕ Resumo do Backend Module
  
 Este módulo consiste em uma API RESTful desenvolvida com o ecossistema Spring Boot, responsável pelo gerenciamento das operações de benefícios da aplicação.
-A API realiza integração direta com o módulo [ejb-module](../ejb-module/), responsável pelas regras de negócio relacionadas à transferência de valores entre benefícios distintos.
+A API realiza integração direta com o módulo [ejb-module](../ejb-module/README.md), responsável pelas regras de negócio relacionadas à transferência de valores entre benefícios distintos.
 
 
 ## 🛠️ Tecnologias e Arquitetura

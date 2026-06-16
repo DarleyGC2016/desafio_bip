@@ -89,7 +89,7 @@ mvn clean package
 
 ### Configuração do Frontend
 
-Acesse a pasta do **[Frontend](frontend/beneficio-web)**, no terminal use esse comando:
+Acesse a pasta do **[Frontend](frontend/README.md)**, no terminal use esse comando:
 
 ```bash
 cd frontend/beneficio-web

@@ -1,3 +1,8 @@
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Jakarta EE](https://img.shields.io/badge/Jakarta%20EE-10-green)
+![EJB](https://img.shields.io/badge/EJB-4.0-yellow)
+![JPA](https://img.shields.io/badge/JPA-3.1-blue)
+![Lombok](https://img.shields.io/badge/Lombok-enabled-red)
 
 # EJB Module
 
