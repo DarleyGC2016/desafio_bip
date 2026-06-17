@@ -1,0 +1,37 @@
+table {
+  width: 100%;
+}
+
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgb(254, 252, 252);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.table-container {
+  position: relative;
+  min-height: 200px;
+  margin-top: 10.5px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.example-card {
+  padding: 10px;
+  box-shadow: 1.5px 1.5px #888888;
+}
+
+.title-list {
+  margin-right: 12.5cm;
+  margin-left: 12.5cm;
+  margin-bottom: 10px;
+}
