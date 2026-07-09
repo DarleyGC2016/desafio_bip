@@ -183,7 +183,9 @@ mvn test
 
 ### Geração o Relatório de Cobertura
 
-Para gerar o relatório de cobertura com ``JaCoCo``:
+Para gerar o relatório de cobertura de testes com o ``JaCoCo`` para todos os módulos,
+execute o seguinte comando na raiz do projeto:
+
 ```bash
 mvn clean verify
 ```
