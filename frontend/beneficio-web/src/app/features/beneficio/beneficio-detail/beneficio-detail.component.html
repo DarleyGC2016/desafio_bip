@@ -1,0 +1,43 @@
+@if (beneficio(); as data){
+    <form class="example-form">
+        <mat-card appearance="outlined" class="example-card">
+            <mat-card-header>
+                <mat-card-title class="title-card">
+                    @if (ativar() === true){
+                        <span>Benefício</span>
+                    } @else {
+                        <span>Editar Benefício</span>
+                    }
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <input-types [(data)]="data.nome" [label]="'Nome'" [disabled]="ativar()"/>
+                <input-area-text [(data)]="data.descricao" [label]="'Descrição'" [disabled]="ativar()" />
+                <input-moeda-real [(data)]="data.valor" [label]="'Valor'" [disabled]="ativar()" />
+                <input-types [data]="data.ativo | ativoResposta" [label]="'Habilitado'" />
+                <input-types [data]="data.version" [label]="'Versão'" />
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="acoes-button">
+                    
+                    <button matButton="filled" (click)="editOrSave(data.nome,data.descricao, data.valor); " type="submit">
+                        <mat-icon>{{trocaIcone('edit', 'save')}}</mat-icon>
+                        @if (ativar()) {
+                            Editar
+                        } @else {                        
+                            Salvar
+                        }
+                    </button>
+                    <button mat-raised-button color="warn" (click)="cancelOrDelete(data.nome)" type="button">
+                        <mat-icon>{{trocaIcone('delete', 'cancel')}}</mat-icon>
+                        @if (ativar()) {
+                            Excluir
+                        } @else {
+                            Cancelar
+                        }
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+}

@@ -14,17 +14,20 @@ public class BeneficioEjbService {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     public void transfer(Long fromId, Long toId, BigDecimal amount) {
         Beneficio from;
         Beneficio to;
 
+        if (fromId.equals(0L) || toId.equals(0L)) {
+            throw new IllegalArgumentException("Não existem benefícios!");
+        }
         if (fromId.equals(toId)) {
-            throw new IllegalArgumentException("Transferência para o mesmo benefício não é permitida");
+            throw new IllegalArgumentException("Não é possível fazer transferência para o mesmo benefício!");
         }
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Valor inválido para transferência");
+            throw new IllegalArgumentException("Valor inválido para transferência!");
         }
 
         if (fromId > toId) {
@@ -48,7 +51,7 @@ public class BeneficioEjbService {
         }
 
         if (from == null || to == null) {
-            throw new IllegalArgumentException("Benefício não encontrado");
+            throw new IllegalArgumentException("Benefício de origem ou destino não encontrado para transferência!");
         }
 
         if (from.getValor().compareTo(amount) < 0) {
