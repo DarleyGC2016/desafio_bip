@@ -19,7 +19,7 @@
 - [⚙️ Como Executar o Servidor](#️-como-executar-o-servidor)
 - [💡 Configuração de Ambiente](#-configuração-de-ambiente)
 - [💡 Configuração de Ambiente para Testes](#-configuração-de-ambiente-para-testes)
-- [📊 Cobertura dos Testes Unitários e Integração](#-cobertura-dos-testes-unitários-e-integração)
+- [📊 Cobertura dos Testes Unitários](#-cobertura-dos-testes-unitários)
 
 ## ☕ Resumo do Backend Module
  
@@ -29,7 +29,7 @@ A API realiza integração direta com o módulo [ejb-module](../ejb-module/READM
 
 ## 🛠️ Tecnologias e Arquitetura
 
-- **Java 17** & **Spring Boot 3.5.14** — Core do desenvolvimento.
+- **Java 17** & **Spring Boot 3.5.16** — Core do desenvolvimento.
 - **Spring Data JPA** — Camada de persistência e comunicação com o banco de dados.
 - **H2 Database / PostgreSQL** — Banco de dados relacional para armazenamento das entidades.
 - **Validation (Jakarta Validator)** — Annotations (`@Valid`) para garantir que as regras de negócio dos campos sejam validadas antes de chegar ao banco.
@@ -183,7 +183,9 @@ mvn test
 
 ### Geração o Relatório de Cobertura
 
-Para gerar o relatório de cobertura com ``JaCoCo``:
+Para gerar o relatório de cobertura de testes com o ``JaCoCo`` para todos os módulos,
+execute o seguinte comando na raiz do projeto:
+
 ```bash
 mvn clean verify
 ```
